@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillReceive", "SkillReceive\SkillReceive.csproj", "{2F90F449-2E67-43EB-B6B6-BEF6D6B052D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillReceive", "SkillReceive\SkillReceive.csproj", "{2F90F449-2E67-43EB-B6B6-BEF6D6B052D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillReceive.Core", "SkillReceive.Core\SkillReceive.Core.csproj", "{2D99D87C-C6B4-459C-BD4B-1E2452DED172}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillReceive.Infrastructure", "SkillReceive.Infrastructure\SkillReceive.Infrastructure.csproj", "{0438172A-D501-4A4B-9032-B72B8F652ED1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{2F90F449-2E67-43EB-B6B6-BEF6D6B052D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F90F449-2E67-43EB-B6B6-BEF6D6B052D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F90F449-2E67-43EB-B6B6-BEF6D6B052D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D99D87C-C6B4-459C-BD4B-1E2452DED172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D99D87C-C6B4-459C-BD4B-1E2452DED172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D99D87C-C6B4-459C-BD4B-1E2452DED172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D99D87C-C6B4-459C-BD4B-1E2452DED172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0438172A-D501-4A4B-9032-B72B8F652ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0438172A-D501-4A4B-9032-B72B8F652ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0438172A-D501-4A4B-9032-B72B8F652ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0438172A-D501-4A4B-9032-B72B8F652ED1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
