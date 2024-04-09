@@ -6,7 +6,7 @@ namespace SkillReceive.Component
     {
         public async Task<IViewComponentResult> InvokeAsync() 
         {
-
+            return await Task.FromResult<IViewComponentResult>(View());
         }
     }
 }
