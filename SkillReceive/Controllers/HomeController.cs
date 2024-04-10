@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Core.Models.Home;
 using SkillReceive.Models;
 using System.Diagnostics;
 
@@ -15,12 +16,9 @@ namespace SkillReceive.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
+            var model = new IndexViewModel();
 
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
