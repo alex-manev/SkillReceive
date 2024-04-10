@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using SkillReceive.Infrastructure.Data.Models;
 using SkillReceive.Infrastructure.Data.Models.Categories;
 using SkillReceive.Infrastructure.Data.Models.Skills;
+using SkillReceive.Infrastructure.Data.SeedDb.CategoryConfiguration;
+using SkillReceive.Infrastructure.Data.SeedDb.CreatorConfiguration;
+using SkillReceive.Infrastructure.Data.SeedDb.SkillTypesConfiguration;
+using SkillReceive.Infrastructure.Data.SeedDb.UserConfiguration;
 
 namespace SkillReceive.Infrastructure.Data
 {
@@ -16,31 +20,14 @@ namespace SkillReceive.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //OnlineCourse
-            builder.Entity<OnlineCourse>()
-                .HasOne(c => c.Category)
-                .WithMany(oc => oc.OnlineCourses)
-                .HasForeignKey(c => c.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new CreatorConfiguration());
+            builder.ApplyConfiguration(new OnHandExperienceCategoryConfiguration());
+            builder.ApplyConfiguration(new OnlineCourseCategoryConfiguration());
+            builder.ApplyConfiguration(new OnHandExperienceConfiguration());
+            builder.ApplyConfiguration(new OnlineCourseConfiguration());
 
-            builder.Entity<OnlineCourse>()
-                .HasOne(c => c.Creator)
-                .WithMany(oc => oc.OnlineCourses)
-                .HasForeignKey(c => c.CreatorId)
-                .OnDelete(DeleteBehavior.Restrict);
 
-            //OnHandExperience
-            builder.Entity<OnHandExperience>()
-                .HasOne(c => c.Category)
-                .WithMany(oe => oe.OnHandExperiences)
-                .HasForeignKey(c => c.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<OnHandExperience>()
-                .HasOne(c => c.Creator)
-                .WithMany(oe => oe.OnHandExperiences)
-                .HasForeignKey(c => c.CreatorId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
