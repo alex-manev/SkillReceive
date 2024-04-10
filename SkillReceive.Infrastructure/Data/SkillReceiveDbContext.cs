@@ -16,6 +16,32 @@ namespace SkillReceive.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //OnlineCourse
+            builder.Entity<OnlineCourse>()
+                .HasOne(c => c.Category)
+                .WithMany(oc => oc.OnlineCourses)
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<OnlineCourse>()
+                .HasOne(c => c.Creator)
+                .WithMany(oc => oc.OnlineCourses)
+                .HasForeignKey(c => c.CreatorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //OnHandExperience
+            builder.Entity<OnHandExperience>()
+                .HasOne(c => c.Category)
+                .WithMany(oe => oe.OnHandExperiences)
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<OnHandExperience>()
+                .HasOne(c => c.Creator)
+                .WithMany(oe => oe.OnHandExperiences)
+                .HasForeignKey(c => c.CreatorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 
