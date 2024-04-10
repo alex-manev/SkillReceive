@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using SkillReceive.Data;
+using SkillReceive.Infrastructure.Data;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
