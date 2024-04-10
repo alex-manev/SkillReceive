@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SkillReceive.Infrastructure.Data.Models.Categories;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -58,5 +59,8 @@ namespace SkillReceive.Infrastructure.Data.Models.Skills
         [Required]
         [ForeignKey(nameof(CreatorId))]
         public Creator Creator { get; set; } = null!;
+
+        [Comment("At Hand Experience participants")]
+        public IEnumerable<IdentityUser> Participants { get; set; } = new List<IdentityUser>();
     }
 }

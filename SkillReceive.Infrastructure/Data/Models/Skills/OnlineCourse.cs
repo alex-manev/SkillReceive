@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SkillReceive.Infrastructure.Data.Models.Categories;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 using static SkillReceive.Infrastructure.Constants.DataConstants.OnlineCourses.OnlineCourse;
 
 namespace SkillReceive.Infrastructure.Data.Models.Skills
@@ -53,5 +54,8 @@ namespace SkillReceive.Infrastructure.Data.Models.Skills
         [Required]
         [ForeignKey(nameof(CreatorId))]
         public Creator Creator { get; set; } = null!;
+
+        [Comment("Online course participants")]
+        public IEnumerable<IdentityUser> Participants { get; set; } = new List<IdentityUser>();
     }
 }
