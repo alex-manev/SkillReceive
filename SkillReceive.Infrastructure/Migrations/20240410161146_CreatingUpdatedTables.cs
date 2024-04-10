@@ -4,10 +4,22 @@
 
 namespace SkillReceive.Infrastructure.Migrations
 {
-    public partial class CreatingTables : Migration
+    public partial class CreatingUpdatedTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<int>(
+                name: "OnHandExperienceId",
+                table: "AspNetUsers",
+                type: "int",
+                nullable: true);
+
+            migrationBuilder.AddColumn<int>(
+                name: "OnlineCourseId",
+                table: "AspNetUsers",
+                type: "int",
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "Creators",
                 columns: table => new
@@ -78,13 +90,13 @@ namespace SkillReceive.Infrastructure.Migrations
                         column: x => x.CreatorId,
                         principalTable: "Creators",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OnHandExperiences_OnHandExperienceCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "OnHandExperienceCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 },
                 comment: "On Hand Experience");
 
@@ -110,15 +122,25 @@ namespace SkillReceive.Infrastructure.Migrations
                         column: x => x.CreatorId,
                         principalTable: "Creators",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OnlineCourses_OnlineCourseCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "OnlineCourseCategories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 },
                 comment: "Online Course");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_OnHandExperienceId",
+                table: "AspNetUsers",
+                column: "OnHandExperienceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_OnlineCourseId",
+                table: "AspNetUsers",
+                column: "OnlineCourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Creators_UserId",
@@ -144,10 +166,32 @@ namespace SkillReceive.Infrastructure.Migrations
                 name: "IX_OnlineCourses_CreatorId",
                 table: "OnlineCourses",
                 column: "CreatorId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_OnHandExperiences_OnHandExperienceId",
+                table: "AspNetUsers",
+                column: "OnHandExperienceId",
+                principalTable: "OnHandExperiences",
+                principalColumn: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUsers_OnlineCourses_OnlineCourseId",
+                table: "AspNetUsers",
+                column: "OnlineCourseId",
+                principalTable: "OnlineCourses",
+                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AspNetUsers_OnHandExperiences_OnHandExperienceId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_AspNetUsers_OnlineCourses_OnlineCourseId",
+                table: "AspNetUsers");
+
             migrationBuilder.DropTable(
                 name: "OnHandExperiences");
 
@@ -162,6 +206,22 @@ namespace SkillReceive.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "OnlineCourseCategories");
+
+            migrationBuilder.DropIndex(
+                name: "IX_AspNetUsers_OnHandExperienceId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropIndex(
+                name: "IX_AspNetUsers_OnlineCourseId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "OnHandExperienceId",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "OnlineCourseId",
+                table: "AspNetUsers");
         }
     }
 }

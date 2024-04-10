@@ -107,6 +107,12 @@ namespace SkillReceive.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("OnHandExperienceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OnlineCourseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -135,6 +141,10 @@ namespace SkillReceive.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("OnHandExperienceId");
+
+                    b.HasIndex("OnlineCourseId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -418,6 +428,17 @@ namespace SkillReceive.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.HasOne("SkillReceive.Infrastructure.Data.Models.Skills.OnHandExperience", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("OnHandExperienceId");
+
+                    b.HasOne("SkillReceive.Infrastructure.Data.Models.Skills.OnlineCourse", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("OnlineCourseId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
@@ -524,6 +545,16 @@ namespace SkillReceive.Infrastructure.Migrations
                     b.Navigation("OnHandExperiences");
 
                     b.Navigation("OnlineCourses");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Skills.OnHandExperience", b =>
+                {
+                    b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Skills.OnlineCourse", b =>
+                {
+                    b.Navigation("Participants");
                 });
 #pragma warning restore 612, 618
         }
