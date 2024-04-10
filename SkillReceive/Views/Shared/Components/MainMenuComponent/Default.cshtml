@@ -1,6 +1,15 @@
 ﻿<ul class="navbar-nav flex-grow-1">
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="All">All Skills</a>
     </li>
+    @if (this.User?.Identity?.IsAuthenticated ?? false)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Mine">My Skills</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Add">Create Skill</a>
+        </li>
+    }
     
 </ul>
