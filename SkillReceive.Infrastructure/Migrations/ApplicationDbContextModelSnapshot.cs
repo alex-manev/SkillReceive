@@ -10,7 +10,7 @@ using SkillReceive.Infrastructure.Data;
 
 namespace SkillReceive.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(SkillReceiveDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -224,6 +224,191 @@ namespace SkillReceive.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Categories.OnHandExperienceCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("OnHandExperience category identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Online course category name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OnHandExperienceCategories");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Categories.OnlineCourseCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Online course category identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Online course category name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OnlineCourseCategories");
+
+                    b.HasComment("Online course category");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Creator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Creator identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("Creator phone number");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("User identifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Creators");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Skills.OnHandExperience", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("On Hand Experience identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int")
+                        .HasComment("Category identifier");
+
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int")
+                        .HasComment("On Hand Experience creator identifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasComment("On Hand Experience description");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("On Hand Experience image url");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("On Hand Experience location");
+
+                    b.Property<decimal>("PricePerMonth")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Monthly price");
+
+                    b.Property<string>("Requirements")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
+                        .HasComment("On Hand Experience location");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("On Hand Experience title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("OnHandExperiences");
+
+                    b.HasComment("On Hand Experience");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Skills.OnlineCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Online course identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int")
+                        .HasComment("Category identifier");
+
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int")
+                        .HasComment("Online course creator identifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasComment("Online course description");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Online course image url");
+
+                    b.Property<string>("NeededTechnologies")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("Online course description");
+
+                    b.Property<decimal>("PricePerMonth")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Monthly price");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasComment("Online course title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("OnlineCourses");
+
+                    b.HasComment("Online Course");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -273,6 +458,72 @@ namespace SkillReceive.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Creator", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Skills.OnHandExperience", b =>
+                {
+                    b.HasOne("SkillReceive.Infrastructure.Data.Models.Categories.OnHandExperienceCategory", "Category")
+                        .WithMany("OnHandExperiences")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SkillReceive.Infrastructure.Data.Models.Creator", "Creator")
+                        .WithMany("OnHandExperiences")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Skills.OnlineCourse", b =>
+                {
+                    b.HasOne("SkillReceive.Infrastructure.Data.Models.Categories.OnlineCourseCategory", "Category")
+                        .WithMany("OnlineCourses")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SkillReceive.Infrastructure.Data.Models.Creator", "Creator")
+                        .WithMany("OnlineCourses")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Categories.OnHandExperienceCategory", b =>
+                {
+                    b.Navigation("OnHandExperiences");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Categories.OnlineCourseCategory", b =>
+                {
+                    b.Navigation("OnlineCourses");
+                });
+
+            modelBuilder.Entity("SkillReceive.Infrastructure.Data.Models.Creator", b =>
+                {
+                    b.Navigation("OnHandExperiences");
+
+                    b.Navigation("OnlineCourses");
                 });
 #pragma warning restore 612, 618
         }
