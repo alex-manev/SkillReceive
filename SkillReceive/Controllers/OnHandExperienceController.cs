@@ -5,8 +5,8 @@ using SkillReceive.Core.Models.Skill.OnlineCourse;
 
 namespace SkillReceive.Controllers
 {
-    [Authorize]
-    public class OnHandExperienceController : Controller
+    
+    public class OnHandExperienceController : BaseController
     {
         [AllowAnonymous]
         [HttpGet]

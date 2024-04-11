@@ -1,12 +1,20 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Models.Creator;
 
 namespace SkillReceive.Controllers
 {
-    [Authorize]
-    public class CreatorController : Controller
+    
+    public class CreatorController : BaseController
     {
+        private readonly ICreatorService creatorService;
+
+        public CreatorController(ICreatorService _creatorService)
+        {
+            creatorService = _creatorService; 
+        }
+
         [HttpGet]
         public async Task<IActionResult> Become()
         {

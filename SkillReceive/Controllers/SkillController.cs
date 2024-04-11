@@ -5,7 +5,7 @@ using SkillReceive.Core.Models.Skill.Skills;
 
 namespace SkillReceive.Controllers
 {
-    public class SkillController : Controller
+    public class SkillController : BaseController
     {
         [AllowAnonymous]
         [HttpGet]
