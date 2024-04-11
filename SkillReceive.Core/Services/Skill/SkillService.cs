@@ -14,12 +14,12 @@ namespace SkillReceive.Core.Services.Skill
             repository = _repository;
         }
 
-        public async Task<IEnumerable<SkillIndexServiceModel>> LastTenSkills()
+        public async Task<IEnumerable<SkillIndexServiceModel>> LastFourSkills()
         {
             List<SkillIndexServiceModel> onlineCourses =
              await repository.AllReadOnlyOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                 .OrderByDescending(h => h.Id)
-                .Take(5)
+                .Take(2)
                 .Select(h => new SkillIndexServiceModel() 
                 {
                     Id = h.Id,
@@ -31,7 +31,7 @@ namespace SkillReceive.Core.Services.Skill
             List<SkillIndexServiceModel> onHandExperiences =
              await repository.AllReadOnlyOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
                 .OrderByDescending(h => h.Id)
-                .Take(5)
+                .Take(2)
                 .Select(h => new SkillIndexServiceModel()
                 {
                     Id = h.Id,
@@ -40,7 +40,7 @@ namespace SkillReceive.Core.Services.Skill
                 })
                 .ToListAsync();
 
-            List<SkillIndexServiceModel> skills = (List<SkillIndexServiceModel>)onlineCourses.Concat(onHandExperiences);
+            var skills = onlineCourses.Concat(onHandExperiences);
 
             return skills;
         }

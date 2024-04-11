@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Models.Home;
 using SkillReceive.Models;
 using System.Diagnostics;
@@ -7,16 +8,19 @@ namespace SkillReceive.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ISkillService skillService;
+
+        public HomeController(ILogger<HomeController> _logger, ISkillService _skillService)
         {
-            _logger = logger;
+            logger = _logger;
+            skillService = _skillService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = new IndexViewModel();
+            var model = await skillService.LastFourSkills();
 
             return View(model);
         }
