@@ -4,6 +4,6 @@
     {
         IQueryable<T> All<T>() where T : class;
 
-        IQueryable<T> AllReadOnlyOnly<T>() where T : class;
+        IQueryable<T> AllReadOnly<T>() where T : class;
     }
 }

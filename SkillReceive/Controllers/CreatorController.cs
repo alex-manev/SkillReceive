@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Models.Creator;
+using SkillReceive.Extensions;
 
 namespace SkillReceive.Controllers
 {
@@ -18,6 +19,12 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Become()
         {
+            if (await creatorService.ExistsByIdAsync(User.Id()))
+            {
+                return BadRequest();
+            }
+
+
             var model = new BecomeCreatorFormModel();
             return View(model);
         }

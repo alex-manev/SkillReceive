@@ -22,7 +22,7 @@ namespace SkillReceive.Infrastructure.Data.Common
             return DbSet<T>();
         }
 
-        public IQueryable<T> AllReadOnlyOnly<T>() where T : class
+        public IQueryable<T> AllReadOnly<T>() where T : class
         {
             return DbSet<T>().AsNoTracking();
         }

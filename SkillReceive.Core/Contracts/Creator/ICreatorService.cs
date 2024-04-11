@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SkillReceive.Core.Contracts.Creator
+﻿namespace SkillReceive.Core.Contracts.Creator
 {
     public interface ICreatorService
     {
+        Task<bool> ExistsByIdAsync(string userId);
+
+        Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber);
+
+        Task<bool> UserHasSkillsAsync(string userId);
+
+        Task<bool> CreateAsync(string userId, string phoneNumber);
+
 
     }
 }

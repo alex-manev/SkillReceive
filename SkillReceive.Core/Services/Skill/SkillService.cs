@@ -14,10 +14,10 @@ namespace SkillReceive.Core.Services.Skill
             repository = _repository;
         }
 
-        public async Task<IEnumerable<SkillIndexServiceModel>> LastFourSkills()
+        public async Task<IEnumerable<SkillIndexServiceModel>> LastFourSkillsAsync()
         {
             List<SkillIndexServiceModel> onlineCourses =
-             await repository.AllReadOnlyOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+             await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                 .OrderByDescending(h => h.Id)
                 .Take(2)
                 .Select(h => new SkillIndexServiceModel() 
@@ -29,7 +29,7 @@ namespace SkillReceive.Core.Services.Skill
                 .ToListAsync();
 
             List<SkillIndexServiceModel> onHandExperiences =
-             await repository.AllReadOnlyOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+             await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
                 .OrderByDescending(h => h.Id)
                 .Take(2)
                 .Select(h => new SkillIndexServiceModel()

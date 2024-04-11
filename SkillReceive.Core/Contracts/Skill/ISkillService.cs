@@ -4,6 +4,6 @@ namespace SkillReceive.Core.Contracts.Skill
 {
     public interface ISkillService
     {
-        Task<IEnumerable<SkillIndexServiceModel>> LastFourSkills();
+        Task<IEnumerable<SkillIndexServiceModel>> LastFourSkillsAsync();
     }
 }

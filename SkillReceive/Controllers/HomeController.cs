@@ -22,7 +22,7 @@ namespace SkillReceive.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var model = await skillService.LastFourSkills();
+            var model = await skillService.LastFourSkillsAsync();
 
             return View(model);
         }
