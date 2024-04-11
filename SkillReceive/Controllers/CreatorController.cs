@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Models.Creator;
-using SkillReceive.Extensions;
+using System.Security.Claims;
 
 namespace SkillReceive.Controllers
 {
-    
+
     public class CreatorController : BaseController
     {
         private readonly ICreatorService creatorService;

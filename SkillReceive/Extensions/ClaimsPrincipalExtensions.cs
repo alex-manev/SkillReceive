@@ -1,6 +1,5 @@
-﻿using System.Security.Claims;
-
-namespace SkillReceive.Extensions
+﻿
+namespace System.Security.Claims
 {
     public static class ClaimsPrincipalExtensions
     {
