@@ -1,12 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Core.Contracts.Creator;
+using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using SkillReceive.Core.Models.Skill.Skills;
+using System.Security.Claims;
 
 namespace SkillReceive.Controllers
 {
     public class SkillController : BaseController
     {
+        private readonly ISkillService skillService;
+        private readonly ICreatorService creatorService;
+
+        public SkillController(ISkillService _skillService, ICreatorService _creatorService)
+        {
+            skillService = _skillService;
+            creatorService = _creatorService;
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult All()
@@ -25,15 +37,17 @@ namespace SkillReceive.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            if (await creatorService.ExistsByIdAsync(User.Id()))
+            {
+                return View();
+            }
+
+            return RedirectToAction(nameof(CreatorController.Become), "Creator");
+
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add(SkillFormModel model)
-        {
-            return RedirectToAction(nameof(All));
-        }
+
     }
 }
