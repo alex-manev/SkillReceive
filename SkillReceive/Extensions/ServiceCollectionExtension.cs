@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.Skill;
+using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Services.Creator;
+using SkillReceive.Core.Services.OnlineCourse;
 using SkillReceive.Core.Services.Skill;
 using SkillReceive.Infrastructure.Data;
 using SkillReceive.Infrastructure.Data.Common;
@@ -15,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<ICreatorService, CreatorService>();
+            services.AddScoped<IOnlineCourseService, OnlineCourseService>();
 
             return services;
         }
