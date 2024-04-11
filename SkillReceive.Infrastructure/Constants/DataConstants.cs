@@ -71,6 +71,8 @@ namespace SkillReceive.Infrastructure.Constants
         public class Creator
         {
             public const int CreatorPhoneNumberMaxLength = 100;
+
+            public const int CreatorPhoneNumberMinLength = 10;
         }
     }
 }
