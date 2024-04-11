@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkillReceive.Core.Models.Skill
+namespace SkillReceive.Core.Models.Skill.OnlineCourse
 {
-    public class AllSkillsQueryModel
+    public class OnlineFormModel
     {
+
     }
 }

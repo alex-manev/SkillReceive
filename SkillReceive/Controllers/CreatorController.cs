@@ -17,7 +17,7 @@ namespace SkillReceive.Controllers
         [HttpPost]
         public async Task<IActionResult> Become(BecomeCreatorFormModel model)
         {
-           return RedirectToAction(nameof(SkillController.All), "Skill");
+           return RedirectToAction(nameof(OnlineCourseController.All), "Skill");
         }
 
     }
