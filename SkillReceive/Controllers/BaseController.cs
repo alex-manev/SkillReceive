@@ -6,6 +6,6 @@ namespace SkillReceive.Controllers
     [Authorize]
     public class BaseController : Controller
     {
-       
+        
     }
 }

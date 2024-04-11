@@ -11,10 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Creator\" />
     <Folder Include="Contracts\OnHandExperience\" />
     <Folder Include="Contracts\OnlineCourse\" />
-    <Folder Include="Services\Creator\" />
     <Folder Include="Services\OnHandExperience\" />
     <Folder Include="Services\OnlineCourse\" />
   </ItemGroup>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.Skill;
+using SkillReceive.Core.Services.Creator;
 using SkillReceive.Core.Services.Skill;
 using SkillReceive.Infrastructure.Data;
 using SkillReceive.Infrastructure.Data.Common;
@@ -12,6 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
         {
             services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<ICreatorService, CreatorService>();
 
             return services;
         }
