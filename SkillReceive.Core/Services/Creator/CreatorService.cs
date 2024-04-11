@@ -13,30 +13,42 @@ namespace SkillReceive.Core.Services.Creator
             repository = _repository;
         }
 
-        public Task<bool> CreateAsync(string userId, string phoneNumber)
+        public async Task CreateAsync(string userId, string phoneNumber)
         {
-            throw new NotImplementedException();
+            await repository.AddAsync(new Infrastructure.Data.Models.Creator() 
+            {
+                UserId = userId,
+                PhoneNumber = phoneNumber
+            });
+
+            await repository.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsById(string userId)
+        public async Task<bool> ExistsByIdAsync(string userId)
         {
             return await repository.AllReadOnly<Infrastructure.Data.Models.Creator>()
                 .AnyAsync(c => c.UserId == userId);
         }
 
-        public Task<bool> ExistsByIdAsync(string userId)
+        public async Task<bool> UserHasSkillsAsync(string userId)
         {
-            throw new NotImplementedException();
+            bool hasOnlineCourses =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .AnyAsync(oc => oc.Creator.UserId == userId);
+
+            bool hasOnHandExperiences = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .AnyAsync(oc => oc.Creator.UserId == userId);
+
+            if (hasOnHandExperiences || hasOnlineCourses)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public Task<bool> UserHasSkillsAsync(string userId)
+        public async Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber)
-        {
-            throw new NotImplementedException();
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Creator>()
+                .AnyAsync (c => c.PhoneNumber == phoneNumber);
         }
     }
 }

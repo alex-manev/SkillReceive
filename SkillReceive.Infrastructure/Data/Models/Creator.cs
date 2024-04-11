@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using SkillReceive.Infrastructure.Data.Models.Skills;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SkillReceive.Infrastructure.Constants.DataConstants;
 using static SkillReceive.Infrastructure.Constants.DataConstants.Creator;
 
 namespace SkillReceive.Infrastructure.Data.Models
 {
+    [Index(nameof(PhoneNumber), IsUnique = true)]
+    [Comment("Skill Creator")]
     public class Creator
     {
         [Key]

@@ -8,7 +8,7 @@
 
         Task<bool> UserHasSkillsAsync(string userId);
 
-        Task<bool> CreateAsync(string userId, string phoneNumber);
+        Task CreateAsync(string userId, string phoneNumber);
 
 
     }
