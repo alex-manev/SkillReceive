@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 
 namespace SkillReceive.Controllers
 {
     [Authorize]
-    public class OnlineCourseController : Controller
+    public class OnHandExperienceController : Controller
     {
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            var model = new AllOnlineQueryModel();
+            var model = new AllOnHandQueryModel();
 
             return View(model);
         }
@@ -19,7 +20,7 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
-            var model = new AllOnlineQueryModel();
+            var model = new AllOnHandQueryModel();
 
             return View(model);
         }
@@ -27,7 +28,7 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Details()
         {
-            var model = new OnlineDetailsViewModel();
+            var model = new OnHandDetailsViewModel();
 
             return View(model);
         }
@@ -39,7 +40,7 @@ namespace SkillReceive.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(OnlineFormModel model)
+        public async Task<IActionResult> Add(OnHandFormModel model)
         {
             return RedirectToAction(nameof(Details), new { id = 1 });
         }
@@ -53,7 +54,7 @@ namespace SkillReceive.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, OnlineFormModel model)
+        public async Task<IActionResult> Edit(int id, OnHandFormModel model)
         {
             return RedirectToAction(nameof(Details), new { id = 1 });
         }
@@ -61,13 +62,13 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var model = new OnlineDetailsViewModel();
+            var model = new OnHandDetailsViewModel();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(OnlineDetailsViewModel model)
+        public async Task<IActionResult> Delete(OnHandDetailsViewModel model)
         {
             return RedirectToAction(nameof(All));
         }
