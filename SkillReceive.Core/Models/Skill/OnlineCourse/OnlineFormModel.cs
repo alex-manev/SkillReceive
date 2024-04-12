@@ -26,8 +26,10 @@ namespace SkillReceive.Core.Models.Skill.OnlineCourse
         public string NeededTechnologies { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(typeof(decimal),"0.00",
+        [Range(typeof(decimal),
+            "0.00",
             PricePerMonthMaximum,
+            ConvertValueInInvariantCulture = true,
             ErrorMessage = "Price per month must be a positive number and less than {2}lv.")]
         [Display(Name = "Price Per Month")]
         public decimal PricePerMonth { get; set; }
