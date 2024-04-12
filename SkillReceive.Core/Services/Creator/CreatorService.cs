@@ -30,6 +30,11 @@ namespace SkillReceive.Core.Services.Creator
                 .AnyAsync(c => c.UserId == userId);
         }
 
+        public async Task<int?> GetCreatorIdAsync(string userId)
+        {
+            return (await repository.AllReadOnly<Infrastructure.Data.Models.Creator>().FirstOrDefaultAsync(a => a.UserId == userId))?.Id;
+        }
+
         public async Task<bool> UserHasSkillsAsync(string userId)
         {
             bool hasOnlineCourses =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
