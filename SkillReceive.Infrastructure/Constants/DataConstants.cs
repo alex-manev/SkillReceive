@@ -23,6 +23,8 @@ namespace SkillReceive.Infrastructure.Constants
 
                 public const int NeededTechnologiesMinLength = 30;
                 public const int NeededTechnologiesMaxLength = 200;
+
+                public const string PricePerMonthMaximum = "1000.00";
             }
 
             // Online Courses Category data constants class

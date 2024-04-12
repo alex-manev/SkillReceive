@@ -12,9 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\OnHandExperience\" />
-    <Folder Include="Contracts\OnlineCourse\" />
     <Folder Include="Services\OnHandExperience\" />
-    <Folder Include="Services\OnlineCourse\" />
   </ItemGroup>
 
 </Project>

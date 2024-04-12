@@ -1,12 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Core.Contracts.Creator;
+using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
+using System.Security.Claims;
 
 namespace SkillReceive.Controllers
 {
     
     public class OnlineCourseController : BaseController
     {
+        private readonly ICreatorService creatorService;
+        private readonly IOnlineCourseService onlineCourseService;
+
+        public OnlineCourseController(ICreatorService _creatorService, IOnlineCourseService _onlineCourseService)
+        {
+            creatorService = _creatorService;
+            onlineCourseService = _onlineCourseService;
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> All()
@@ -33,9 +45,19 @@ namespace SkillReceive.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            if (await creatorService.ExistsByIdAsync(User.Id()) == false)
+            {
+                return RedirectToAction(nameof(CreatorController.Become), "Creator");
+            }
+
+            var model = new OnlineFormModel() 
+            {
+                Categories = await onlineCourseService.AllCategoriesAsync()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
