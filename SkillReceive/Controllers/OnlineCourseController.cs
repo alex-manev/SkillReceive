@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Attributes;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
@@ -45,12 +46,9 @@ namespace SkillReceive.Controllers
         }
 
         [HttpGet]
+        [MustBeCreator]
         public async Task<IActionResult> Add()
         {
-            if (await creatorService.ExistsByIdAsync(User.Id()) == false)
-            {
-                return RedirectToAction(nameof(CreatorController.Become), "Creator");
-            }
 
             var model = new OnlineFormModel() 
             {
@@ -61,9 +59,26 @@ namespace SkillReceive.Controllers
         }
 
         [HttpPost]
+        [MustBeCreator]
         public async Task<IActionResult> Add(OnlineFormModel model)
         {
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (await onlineCourseService.CategoryExistsAsync(model.CategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "");
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                model.Categories = await onlineCourseService.AllCategoriesAsync();
+
+                return View(model);
+            }
+
+            int? creatorId = await creatorService.GetCreatorIdAsync(User.Id());
+
+            int newOnlineCourseId = await onlineCourseService.CreateAsync(model, creatorId ?? 0);
+
+            return RedirectToAction(nameof(Details), new { id = newOnlineCourseId });
         }
 
         [HttpGet]
