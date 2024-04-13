@@ -1,23 +1,57 @@
-﻿using SkillReceive.Core.Contracts.OnHandExperience;
+﻿using Microsoft.EntityFrameworkCore;
+using SkillReceive.Core.Contracts.OnHandExperience;
+using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
+using SkillReceive.Infrastructure.Data.Common;
+using SkillReceive.Infrastructure.Data.Models.Categories;
 
 namespace SkillReceive.Core.Services.OnHandExperience
 {
     public class OnHandService : IOnHandService
     {
-        public Task<IEnumerable<OnlineCategoryServiceModel>> AllCategoriesAsync()
+        private readonly IRepository repository;
+
+        public OnHandService(IRepository _repository)
         {
-            throw new NotImplementedException();
+                repository = _repository;
         }
 
-        public Task<bool> CategoryExistsAsync(int categoryId)
+        public async Task<IEnumerable<OnHandCategoryServiceModel>> AllCategoriesAsync()
         {
-            throw new NotImplementedException();
+            return await repository.AllReadOnly<OnHandExperienceCategory>()
+                .Select(c => new OnHandCategoryServiceModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
         }
 
-        public Task<int> CreateAsync(OnlineFormModel model, int creatorId)
+        public async Task<bool> CategoryExistsAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            return await repository.AllReadOnly<OnHandExperienceCategory>()
+               .AnyAsync(c => c.Id == categoryId);
+        }
+
+        public async Task<int> CreateAsync(OnHandFormModel model, int creatorId)
+        {
+            Infrastructure.Data.Models.Skills.OnHandExperience onHandExperience = new Infrastructure.Data.Models.Skills.OnHandExperience()
+            {
+                Title = model.Title,
+                CreatorId = creatorId,
+                CategoryId = model.CategoryId,
+                Description = model.Description,
+                Requirements = model.Requirements,
+                Location = model.Location,
+                PricePerMonth = model.PricePerMonth,
+                ImageURL = model.ImageURL
+            };
+
+            await repository.AddAsync(onHandExperience);
+            await repository.SaveChangesAsync();
+
+            return onHandExperience.Id;
+
         }
     }
 }
