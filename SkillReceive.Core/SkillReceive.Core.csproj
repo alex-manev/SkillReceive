@@ -10,9 +10,4 @@
     <ProjectReference Include="..\SkillReceive.Infrastructure\SkillReceive.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\OnHandExperience\" />
-    <Folder Include="Services\OnHandExperience\" />
-  </ItemGroup>
-
 </Project>
