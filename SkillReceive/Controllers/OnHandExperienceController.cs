@@ -1,13 +1,28 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SkillReceive.Attributes;
+using SkillReceive.Core.Contracts.Creator;
+using SkillReceive.Core.Contracts.OnHandExperience;
+using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
+using SkillReceive.Core.Services.OnlineCourse;
+using System.Security.Claims;
 
 namespace SkillReceive.Controllers
 {
     
     public class OnHandExperienceController : BaseController
     {
+        private readonly ICreatorService creatorService;
+        private readonly IOnHandService onHandService;
+
+        public OnHandExperienceController(ICreatorService _creatorService, IOnHandService _onHandService)
+        {                                 
+            creatorService = _creatorService;
+            onHandService = _onHandService;
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> All()
@@ -34,15 +49,38 @@ namespace SkillReceive.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        [MustBeCreator]
+        public async Task<IActionResult> Add()
         {
-            return View();
+            var model = new OnHandFormModel()
+            {
+                Categories = await onHandService.AllCategoriesAsync()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
+        [MustBeCreator]
         public async Task<IActionResult> Add(OnHandFormModel model)
         {
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (await onHandService.CategoryExistsAsync(model.CategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "");
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                model.Categories = await onHandService.AllCategoriesAsync();
+
+                return View(model);
+            }
+
+            int? creatorId = await creatorService.GetCreatorIdAsync(User.Id());
+
+            int newOnHandExperienceId = await onHandService.CreateAsync(model, creatorId ?? 0);
+
+            return RedirectToAction(nameof(Details), new { id = newOnHandExperienceId });
         }
 
         [HttpGet]
