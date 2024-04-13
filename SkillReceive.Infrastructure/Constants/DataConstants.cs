@@ -58,6 +58,8 @@ namespace SkillReceive.Infrastructure.Constants
                 public const int RequirementsMinLength = 50;
                 public const int RequirementsMaxLength = 300;
 
+
+                public const string PricePerMonthMaximum = "1000.00";
             }
 
             // OnHandExperience Category data constants class
