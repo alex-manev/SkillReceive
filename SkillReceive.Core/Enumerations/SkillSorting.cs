@@ -3,7 +3,7 @@
     public enum SkillSorting
     {
         Price = 0,
-        Level = 1,
+        Newest = 1,
         Participants = 2
     }
 }

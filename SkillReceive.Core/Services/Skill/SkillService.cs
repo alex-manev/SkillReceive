@@ -16,7 +16,7 @@ namespace SkillReceive.Core.Services.Skill
             repository = _repository;
         }
 
-        public async Task<SkillQueryServiceModel> AllOnlineAsync(string? category = null, string? searchTerm = null, SkillSorting sorting = SkillSorting.Level, int currPage = 1, int skillsPerPage = 1)
+        public async Task<SkillQueryServiceModel> AllOnlineAsync(string? category = null, string? searchTerm = null, SkillSorting sorting = SkillSorting.Newest, int currPage = 1, int skillsPerPage = 1)
         {
             var onlineToShow = repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>();
 
@@ -69,7 +69,7 @@ namespace SkillReceive.Core.Services.Skill
             };
         }
 
-        public async Task<SkillQueryServiceModel> AllOnHandAsync(string? category = null, string? searchTerm = null, SkillSorting sorting = SkillSorting.Level, int currPage = 1, int skillsPerPage = 1)
+        public async Task<SkillQueryServiceModel> AllOnHandAsync(string? category = null, string? searchTerm = null, SkillSorting sorting = SkillSorting.Newest, int currPage = 1, int skillsPerPage = 1)
         {
             var onHandToShow = repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>();
 
@@ -172,6 +172,16 @@ namespace SkillReceive.Core.Services.Skill
             var skills = onlineCourses.Concat(onHandExperiences);
 
             return skills;
+        }
+
+        public Task<IEnumerable<SkillServiceModel>> AllSkillsByCreatorIdAsync(int creatorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<SkillServiceModel>> AllSkillsByUserId(string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -9,16 +9,20 @@ namespace SkillReceive.Core.Contracts.Skill
 
         Task<SkillQueryServiceModel> AllOnlineAsync(string? category = null,
             string? searchTerm = null,
-            SkillSorting sorting = SkillSorting.Level ,
+            SkillSorting sorting = SkillSorting.Newest ,
             int currPage = 1,
             int sikillsPerPage = 1 );
 
         Task<SkillQueryServiceModel> AllOnHandAsync(string? category = null,
             string? searchTerm = null,
-            SkillSorting sorting = SkillSorting.Level,
+            SkillSorting sorting = SkillSorting.Newest,
             int currPage = 1,
             int sikillsPerPage = 1);
 
         Task<IEnumerable<string>> AllCategoriesNamesAsync();
+
+        Task<IEnumerable<SkillServiceModel>> AllSkillsByCreatorIdAsync(int creatorId);
+
+        Task<IEnumerable<SkillServiceModel>> AllSkillsByUserId(string userId);
     }
 }
