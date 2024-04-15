@@ -140,7 +140,25 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var model = new OnlineDetailsViewModel();
+            if (await skillService.ExistsOnlineAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
+            var onlineCourse = await skillService.OnlineDetailsByIdAsync(id);
+
+            var model = new OnlineDetailsViewModel()
+            {
+                Id = id,
+                ImageURL = onlineCourse.ImageURL,
+                Title = onlineCourse.Title,
+                NeededTechnologies = onlineCourse.NeededTechnologies
+            };
 
             return View(model);
         }
@@ -148,6 +166,18 @@ namespace SkillReceive.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(OnlineDetailsViewModel model)
         {
+            if (await skillService.ExistsOnlineAsync(model.Id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onlineCourseService.HasCreatorWithIdAsync(model.Id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
+            await skillService.DeleteOnlineAsync(model.Id);
+
             return RedirectToAction(nameof(All));
         }
 

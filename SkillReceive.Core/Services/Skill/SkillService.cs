@@ -162,38 +162,45 @@ namespace SkillReceive.Core.Services.Skill
             return skills;
         }
 
-        public async Task<IEnumerable<SkillServiceModel>> AllSkillsByCreatorIdAsync(int creatorId)
+        public async Task<IEnumerable<SkillServiceModel>> AllOnlineSkillsByCreatorIdAsync(int creatorId)
         {
             var onlineCourses =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                  .Where(c => c.CreatorId == creatorId)
                  .ProjectOnlineCourse()
                  .ToListAsync();
 
-            var onHandExps =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+            return onlineCourses;
+        }
+
+        public async Task<IEnumerable<SkillServiceModel>> AllOnHandSkillsByCreatorIdAsync(int creatorId)
+        {
+            var onHandExps = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
                  .Where(c => c.CreatorId == creatorId)
                  .ProjectOnHand()
                  .ToListAsync();
 
-            var skills = onlineCourses.Concat(onHandExps);
-
-            return skills;
+            
+            return onHandExps;
         }
 
-        public async Task<IEnumerable<SkillServiceModel>> AllSkillsByUserId(string userId)
+        public async Task<IEnumerable<SkillServiceModel>> AllOnlineSkillsByUserId(string userId)
         {
             var onlineCourses = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                  .Where(c => c.Participants.Any(p => p.Id == userId))
                  .ProjectOnlineCourse()
                  .ToListAsync();
 
+            return onlineCourses;
+        }
+
+
+        public async Task<IEnumerable<SkillServiceModel>> AllOnHandSkillsByUserId(string userId)
+        {
             var onHandExps = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
                  .Where(c => c.Participants.Any(p => p.Id == userId))
                  .ProjectOnHand()
                  .ToListAsync();
-
-            var skills = onlineCourses.Concat(onHandExps);
-
-            return skills;
+            return onHandExps;
         }
 
         public async Task<bool> ExistsAsync(int id)
@@ -272,6 +279,18 @@ namespace SkillReceive.Core.Services.Skill
         {
             return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
                 .AnyAsync(o => o.Id == id);
+        }
+
+        public async Task DeleteOnlineAsync(int skillId)
+        {
+            await repository.DeleteAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(skillId);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteOnHandAsync(int skillId)
+        {
+            await repository.DeleteAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
+            await repository.SaveChangesAsync();
         }
     }
 }

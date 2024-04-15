@@ -23,9 +23,14 @@ namespace SkillReceive.Core.Contracts.Skill
 
         Task<IEnumerable<string>> AllCategoriesNamesAsync();
 
-        Task<IEnumerable<SkillServiceModel>> AllSkillsByCreatorIdAsync(int creatorId);
+        Task<IEnumerable<SkillServiceModel>> AllOnlineSkillsByCreatorIdAsync(int creatorId);
 
-        Task<IEnumerable<SkillServiceModel>> AllSkillsByUserId(string userId);
+        Task<IEnumerable<SkillServiceModel>> AllOnHandSkillsByCreatorIdAsync(int creatorId);
+
+
+        Task<IEnumerable<SkillServiceModel>> AllOnlineSkillsByUserId(string userId);
+
+        Task<IEnumerable<SkillServiceModel>> AllOnHandSkillsByUserId(string userId);
 
         Task<bool> ExistsAsync(int id);
 
@@ -37,6 +42,8 @@ namespace SkillReceive.Core.Contracts.Skill
 
         Task<OnHandDetailsServiceModel> OnHandDetailsByIdAsync(int id);
 
-       
+        Task DeleteOnlineAsync(int skillId);
+
+        Task DeleteOnHandAsync(int skillId);
     }
 }

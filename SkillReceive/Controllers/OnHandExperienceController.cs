@@ -141,7 +141,26 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var model = new OnHandDetailsViewModel();
+            if (await skillService.ExistsOnHandAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
+            var onhandExp = await skillService.OnHandDetailsByIdAsync(id);
+
+            var model = new OnHandDetailsViewModel()
+            {
+                Id = id,
+                ImageURL = onhandExp.ImageURL,
+                Title = onhandExp.Title,
+                Location = onhandExp.Location,
+                Requirements = onhandExp.Requirements
+            };
 
             return View(model);
         }
@@ -149,7 +168,19 @@ namespace SkillReceive.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(OnHandDetailsViewModel model)
         {
-            return RedirectToAction(nameof(All));
+            if (await skillService.ExistsOnHandAsync(model.Id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onHandService.HasCreatorWithIdAsync(model.Id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
+            await skillService.DeleteOnHandAsync(model.Id);
+
+            return RedirectToAction(nameof(Mine));
         }
 
         [HttpPost]

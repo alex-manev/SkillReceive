@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SkillServiceModel>
+﻿@model SkillMineModel
 
 @{
     ViewData["Title"] = "My Skills";
@@ -7,14 +7,33 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-@if (Model.Any() == false)
+
+<h2 class="text-center">Online Courses</h2>
+<hr />
+@if (Model.OnlineCourses.Any() == false)
 {
     <h3 class:"text-center">You have no skills yet!</h3>
 }
 
 <div class="rom">
-    @foreach (var item in Model)
+    @foreach (var item in Model.OnlineCourses)
     {
         <partial name="_OnlineAllPartial" model="@item" />
     }
 </div>
+
+<h2 class="text-center">On Hand Experiences</h2>
+<hr />
+
+@if (Model.OnHandExperiences.Any() == false)
+{
+    <h3 class="text-center">No skills found by the given criteria!</h3>
+}
+
+<div class="row">
+    @foreach (var skill in Model.OnHandExperiences)
+    {
+        <partial name="_OnHandAllPartial" model="@skill" />
+    }
+</div>
+

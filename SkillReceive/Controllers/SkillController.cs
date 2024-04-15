@@ -21,7 +21,7 @@ namespace SkillReceive.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All([FromQuery]AllSkillsQueryModel query)
+        public async Task<IActionResult> All([FromQuery] AllSkillsQueryModel query)
         {
             var onlinemodel = await skillService.AllOnlineAsync(
                 query.Category,
@@ -52,21 +52,30 @@ namespace SkillReceive.Controllers
         {
             var userId = User.Id();
 
-            IEnumerable<SkillServiceModel> model;
+            SkillMineModel model;
 
             if (await creatorService.ExistsByIdAsync(userId))
             {
                 int creatorId = await creatorService.GetCreatorIdAsync(userId) ?? 0;
-                model = await skillService.AllSkillsByCreatorIdAsync(creatorId);
+                model = new SkillMineModel()
+                {
+                    OnlineCourses = await skillService.AllOnlineSkillsByCreatorIdAsync(creatorId),
+                    OnHandExperiences = await skillService.AllOnHandSkillsByCreatorIdAsync(creatorId)
+                };
             }
-
-            else 
+            else
             {
-                model = await skillService.AllSkillsByUserId(userId);
+                model = new SkillMineModel() 
+                {
+                    OnlineCourses = await skillService.AllOnlineSkillsByUserId(userId),
+                    OnHandExperiences = await skillService.AllOnHandSkillsByUserId(userId)
+                };
             }
 
             return View(model);
+
         }
+    
 
         [HttpGet]
         public async Task<IActionResult> Add()
