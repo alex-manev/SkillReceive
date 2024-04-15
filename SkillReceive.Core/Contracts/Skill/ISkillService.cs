@@ -1,4 +1,6 @@
 ﻿using SkillReceive.Core.Enumerations;
+using SkillReceive.Core.Models.Skill.OnHandExperience;
+using SkillReceive.Core.Models.Skill.OnlineCourse;
 using SkillReceive.Core.Models.Skill.Skills;
 
 namespace SkillReceive.Core.Contracts.Skill
@@ -24,5 +26,11 @@ namespace SkillReceive.Core.Contracts.Skill
         Task<IEnumerable<SkillServiceModel>> AllSkillsByCreatorIdAsync(int creatorId);
 
         Task<IEnumerable<SkillServiceModel>> AllSkillsByUserId(string userId);
+
+        Task<bool> ExistsAsync(int id);
+
+        Task<OnlineDetailServiceModel> OnlineDetailsByIdAsync(int id);
+
+        Task<OnHandDetailsServiceModel> OnHandDetailsByIdAsync(int id);
     }
 }

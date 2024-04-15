@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Enumerations;
+using SkillReceive.Core.Models.Skill.OnHandExperience;
+using SkillReceive.Core.Models.Skill.OnlineCourse;
 using SkillReceive.Core.Models.Skill.Skills;
 using SkillReceive.Infrastructure.Data.Common;
 using SkillReceive.Infrastructure.Data.Models.Categories;
@@ -194,7 +196,70 @@ namespace SkillReceive.Core.Services.Skill
             return skills;
         }
 
+        public async Task<bool> ExistsAsync(int id)
+        {
+            bool onlineExist = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .AnyAsync(o => o.Id == id);
 
-       
+            bool onHandExist = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .AnyAsync(o => o.Id == id);
+
+            if (onlineExist || onHandExist)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<OnlineDetailServiceModel> OnlineDetailsByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(o => o.Id == id)
+                .Select(o => new OnlineDetailServiceModel()
+                { 
+                   Id = o.Id,
+                   NeededTechnologies = o.NeededTechnologies,
+                   Creator = new Models.Creator.CreatorServiceModel() 
+                   {
+                       Email = o.Creator.User.Email,
+                       PhoneNumber = o.Creator.PhoneNumber,
+                   },
+                   Category = o.Category.Name,
+                   Description = o.Description,
+                   ImageURL = o.ImageURL,
+                   Participants = o.Participants.Count(),
+                   PricePerMonth = o.PricePerMonth,
+                   Title = o.Title
+                }
+                )
+                .FirstAsync();
+
+        }
+
+        public async Task<OnHandDetailsServiceModel> OnHandDetailsByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(o => o.Id == id)
+                .Select(o => new OnHandDetailsServiceModel()
+                {
+                    Id = o.Id,
+                    Location = o.Location,
+                    Requirements = o.Requirements,  
+                    Creator = new Models.Creator.CreatorServiceModel()
+                    {
+                        Email = o.Creator.User.Email,
+                        PhoneNumber = o.Creator.PhoneNumber,
+                    },
+                    Category = o.Category.Name,
+                    Description = o.Description,
+                    ImageURL = o.ImageURL,
+                    Participants = o.Participants.Count(),
+                    PricePerMonth = o.PricePerMonth,
+                    Title = o.Title
+                }
+                )
+                .FirstAsync();
+
+        }
     }
 }

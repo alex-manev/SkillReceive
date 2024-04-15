@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SkillReceive.Attributes;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnlineCourse;
+using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using System.Security.Claims;
 
@@ -13,11 +14,13 @@ namespace SkillReceive.Controllers
     {
         private readonly ICreatorService creatorService;
         private readonly IOnlineCourseService onlineCourseService;
+        private readonly ISkillService skillService;
 
-        public OnlineCourseController(ICreatorService _creatorService, IOnlineCourseService _onlineCourseService)
+        public OnlineCourseController(ICreatorService _creatorService, IOnlineCourseService _onlineCourseService, ISkillService _skillService)
         {
             creatorService = _creatorService;
             onlineCourseService = _onlineCourseService;
+            skillService = _skillService;
         }
 
         [AllowAnonymous]
@@ -38,9 +41,14 @@ namespace SkillReceive.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(int id)
         {
-            var model = new OnlineDetailsViewModel();
+            if (await skillService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await skillService.OnlineDetailsByIdAsync(id);
 
             return View(model);
         }

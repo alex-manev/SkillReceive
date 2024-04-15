@@ -10,6 +10,7 @@ namespace SkillReceive.Core.Models.Skill.OnlineCourse
         public string NeededTechnologies { get; set; } = null!;
         public string Category { get; set; } = null!;
 
+
         public CreatorServiceModel Creator { get; set; } = null!;
     }
 }

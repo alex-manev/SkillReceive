@@ -3,24 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using SkillReceive.Attributes;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnHandExperience;
-using SkillReceive.Core.Contracts.OnlineCourse;
+using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
-using SkillReceive.Core.Services.OnlineCourse;
 using System.Security.Claims;
 
 namespace SkillReceive.Controllers
 {
-    
+
     public class OnHandExperienceController : BaseController
     {
         private readonly ICreatorService creatorService;
         private readonly IOnHandService onHandService;
+        private readonly ISkillService skillService;
 
-        public OnHandExperienceController(ICreatorService _creatorService, IOnHandService _onHandService)
+        public OnHandExperienceController(ICreatorService _creatorService, IOnHandService _onHandService, ISkillService _skillService)
         {                                 
             creatorService = _creatorService;
             onHandService = _onHandService;
+            skillService = _skillService;
         }
 
         [AllowAnonymous]
@@ -41,9 +42,14 @@ namespace SkillReceive.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(int id)
         {
-            var model = new OnHandDetailsViewModel();
+            if (await skillService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await skillService.OnHandDetailsByIdAsync(id);
 
             return View(model);
         }
