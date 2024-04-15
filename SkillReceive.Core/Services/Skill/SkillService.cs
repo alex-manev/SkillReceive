@@ -160,14 +160,38 @@ namespace SkillReceive.Core.Services.Skill
             return skills;
         }
 
-        public Task<IEnumerable<SkillServiceModel>> AllSkillsByCreatorIdAsync(int creatorId)
+        public async Task<IEnumerable<SkillServiceModel>> AllSkillsByCreatorIdAsync(int creatorId)
         {
-            throw new NotImplementedException();
+            var onlineCourses =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                 .Where(c => c.CreatorId == creatorId)
+                 .ProjectOnlineCourse()
+                 .ToListAsync();
+
+            var onHandExps =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                 .Where(c => c.CreatorId == creatorId)
+                 .ProjectOnHand()
+                 .ToListAsync();
+
+            var skills = onlineCourses.Concat(onHandExps);
+
+            return skills;
         }
 
-        public Task<IEnumerable<SkillServiceModel>> AllSkillsByUserId(string userId)
+        public async Task<IEnumerable<SkillServiceModel>> AllSkillsByUserId(string userId)
         {
-            throw new NotImplementedException();
+            var onlineCourses = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                 .Where(c => c.Participants.Any(p => p.Id == userId))
+                 .ProjectOnlineCourse()
+                 .ToListAsync();
+
+            var onHandExps = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                 .Where(c => c.Participants.Any(p => p.Id == userId))
+                 .ProjectOnHand()
+                 .ToListAsync();
+
+            var skills = onlineCourses.Concat(onHandExps);
+
+            return skills;
         }
 
 
