@@ -21,11 +21,30 @@ namespace SkillReceive.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult All()
+        public async Task<IActionResult> All([FromQuery]AllSkillsQueryModel query)
         {
-            var model = new AllSkillsQueryModel();
+            var onlinemodel = await skillService.AllOnlineAsync(
+                query.Category,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                query.SkillsPerPage
+                );
 
-            return View(model);
+            var onHandModel = await skillService.AllOnHandAsync(
+                query.Category,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                query.SkillsPerPage
+                );
+
+            query.TotalSkillsCount = onlinemodel.TotalSkillsCount + onHandModel.TotalSkillsCount;
+            query.OnlineSkills = onlinemodel.Skills;
+            query.OnHandSkills = onHandModel.Skills;
+            query.Categories = await skillService.AllCategoriesNamesAsync();
+
+            return View(query);
         }
 
         [HttpGet]

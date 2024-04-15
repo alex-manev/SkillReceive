@@ -5,5 +5,7 @@
         public int TotalSkillsCount { get; set; }
 
         public IEnumerable<SkillServiceModel> Skills { get; set; } = new List<SkillServiceModel>();
+
+
     }
 }

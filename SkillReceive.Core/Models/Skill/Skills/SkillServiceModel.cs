@@ -25,6 +25,9 @@ namespace SkillReceive.Core.Models.Skill.Skills
             ConvertValueInInvariantCulture = true,
             ErrorMessage = "Price per month must be a positive number and less than {2}lv.")]
         [Display(Name = "Price Per Month")]
-        public decimal PriePerMonth { get; set; }
+        public decimal PricePerMonth { get; set; }
+
+
+        public int Participants { get; set; }
     }
 }

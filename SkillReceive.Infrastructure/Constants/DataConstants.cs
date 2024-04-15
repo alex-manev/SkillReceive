@@ -15,7 +15,7 @@ namespace SkillReceive.Infrastructure.Constants
             public class OnlineCourse
             {
                 // Online Courses title length requirements 
-                public const int TitleMinLength = 5;
+                public const int TitleMinLength = 10;
                 public const int TitleMaxLength = 40;
 
                 public const int DescriptionMinLength = 50;

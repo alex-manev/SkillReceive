@@ -2,8 +2,8 @@
 {
     public enum SkillSorting
     {
-        Begginer = 0,
-        Intermediate = 1,
-        Advanced = 2
+        Price = 0,
+        Level = 1,
+        Participants = 2
     }
 }
