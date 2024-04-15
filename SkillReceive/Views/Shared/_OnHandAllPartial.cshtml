@@ -15,9 +15,9 @@
                class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
             {
-                <a asp-controller="Skill" asp-action="Edit" asp-route-id="@Model.Id"
+                <a asp-controller="OnhandExperience" asp-action="Edit" asp-route-id="@Model.Id"
                    class="btn btn-warning">Edit</a>
-                <a asp-controller="Skill" asp-action="Delete" asp-route-id="@Model.Id"
+                <a asp-controller="OnhandExperience" asp-action="Delete" asp-route-id="@Model.Id"
                    class="btn btn-danger">Delete</a>
                 <p></p>
                 @* @if ()

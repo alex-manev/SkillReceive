@@ -10,5 +10,11 @@ namespace SkillReceive.Core.Contracts.OnHandExperience
         Task<bool> CategoryExistsAsync(int categoryId);
 
         Task<int> CreateAsync(OnHandFormModel model, int creatorId);
+
+        Task EditAsync(int skillId, OnHandFormModel model);
+
+        Task<bool> HasCreatorWithIdAsync(int onHandExpId, string userId);
+
+        Task<OnHandFormModel?> GetOnHandFormModelByIdAsync(int id);
     }
 }

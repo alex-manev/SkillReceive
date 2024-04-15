@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using SkillReceive.Attributes;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnHandExperience;
+using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
+using SkillReceive.Core.Services.OnlineCourse;
 using System.Security.Claims;
 
 namespace SkillReceive.Controllers
@@ -92,7 +94,17 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new OnlineFormModel();
+            if (await skillService.ExistsOnHandAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
+            var model = await onHandService.GetOnHandFormModelByIdAsync(id);
 
             return View(model);
         }
@@ -100,7 +112,30 @@ namespace SkillReceive.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, OnHandFormModel model)
         {
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (await skillService.ExistsOnlineAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
+            if (await onHandService.CategoryExistsAsync(model.CategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                model.Categories = await onHandService.AllCategoriesAsync();
+                return View(model);
+            }
+
+            await onHandService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         [HttpGet]

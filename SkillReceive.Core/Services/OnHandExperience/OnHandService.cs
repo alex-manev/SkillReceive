@@ -53,5 +53,53 @@ namespace SkillReceive.Core.Services.OnHandExperience
             return onHandExperience.Id;
 
         }
+
+        public async Task EditAsync(int skillId, OnHandFormModel model)
+        {
+            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
+
+            if (skill != null)
+            {
+                skill.CategoryId = model.CategoryId;
+                skill.Location = model.Location;
+                skill.Requirements = model.Requirements;
+                skill.PricePerMonth = model.PricePerMonth;
+                skill.Description = model.Description;
+                skill.ImageURL = model.ImageURL;
+                skill.Title = model.Title;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<OnHandFormModel?> GetOnHandFormModelByIdAsync(int id)
+        {
+            var onHandExp = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(o => o.Id == id)
+                .Select(o => new OnHandFormModel()
+                {
+                    Location = o.Location,
+                    Requirements = o.Requirements,
+                    CategoryId = o.CategoryId,
+                    Description = o.Description,
+                    PricePerMonth = o.PricePerMonth,
+                    ImageURL = o.ImageURL,
+                    Title = o.Title
+                })
+                .FirstOrDefaultAsync();
+
+            if (onHandExp != null)
+            {
+                onHandExp.Categories = await AllCategoriesAsync();
+            }
+
+            return onHandExp;
+        }
+
+        public async Task<bool> HasCreatorWithIdAsync(int onHandExpId, string userId)
+        {
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                 .AnyAsync(o => o.Id == onHandExpId && o.Creator.UserId == userId);
+        }
     }
 }
