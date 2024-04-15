@@ -1,4 +1,4 @@
-﻿@model AllSkillsQueryModel
+﻿@model IEnumerable<SkillServiceModel>
 
 @{
     ViewData["Title"] = "My Skills";
@@ -6,3 +6,15 @@
 
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
+
+@if (Model.Any() == false)
+{
+    <h3 class:"text-center">You have no skills yet!</h3>
+}
+
+<div class="rom">
+    @foreach (var item in Model)
+    {
+        <partial name="_OnlineAllPartial" model="@item" />
+    }
+</div>

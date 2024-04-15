@@ -50,7 +50,20 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
-            var model = new AllSkillsQueryModel();
+            var userId = User.Id();
+
+            IEnumerable<SkillServiceModel> model;
+
+            if (await creatorService.ExistsByIdAsync(userId))
+            {
+                int creatorId = await creatorService.GetCreatorIdAsync(userId) ?? 0;
+                model = await skillService.AllSkillsByCreatorIdAsync(creatorId);
+            }
+
+            else 
+            {
+                model = await skillService.AllSkillsByUserId(userId);
+            }
 
             return View(model);
         }
