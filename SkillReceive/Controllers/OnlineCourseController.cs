@@ -72,7 +72,7 @@ namespace SkillReceive.Controllers
         {
             if (await onlineCourseService.CategoryExistsAsync(model.CategoryId) == false)
             {
-                ModelState.AddModelError(nameof(model.CategoryId), "");
+                ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
             }
 
             if (ModelState.IsValid == false)
@@ -92,7 +92,17 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new OnlineFormModel();
+            if (await skillService.ExistsOnlineAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id())  == false)
+            {
+                return Unauthorized();
+            }
+
+            var model = await onlineCourseService.GetOnlineFormModelByIdAsync(id);
 
             return View(model);
         }
@@ -100,7 +110,31 @@ namespace SkillReceive.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, OnlineFormModel model)
         {
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (await skillService.ExistsOnlineAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            {
+                return Unauthorized();
+            }
+
+            if (await onlineCourseService.CategoryExistsAsync(model.CategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                model.Categories = await onlineCourseService.AllCategoriesAsync();
+
+                return View(model);
+            }
+
+            await onlineCourseService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         [HttpGet]

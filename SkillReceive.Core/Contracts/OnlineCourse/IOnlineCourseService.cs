@@ -1,4 +1,5 @@
 ﻿using SkillReceive.Core.Models.Skill.OnlineCourse;
+using SkillReceive.Core.Models.Skill.Skills;
 
 namespace SkillReceive.Core.Contracts.OnlineCourse
 {
@@ -9,5 +10,11 @@ namespace SkillReceive.Core.Contracts.OnlineCourse
         Task<bool> CategoryExistsAsync(int categoryId);
 
         Task<int> CreateAsync(OnlineFormModel model, int creatorId);
+
+        Task EditAsync(int skillId, OnlineFormModel model);
+
+        Task<bool> HasCreatorWithIdAsync(int onlineCourseId, string userId);
+
+        Task<OnlineFormModel?> GetOnlineFormModelByIdAsync(int id);
     }
 }

@@ -29,8 +29,14 @@ namespace SkillReceive.Core.Contracts.Skill
 
         Task<bool> ExistsAsync(int id);
 
+        Task<bool> ExistsOnlineAsync(int id);
+
+        Task<bool> ExistsOnHandAsync(int id);
+
         Task<OnlineDetailServiceModel> OnlineDetailsByIdAsync(int id);
 
         Task<OnHandDetailsServiceModel> OnHandDetailsByIdAsync(int id);
+
+       
     }
 }

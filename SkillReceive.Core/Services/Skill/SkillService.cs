@@ -261,5 +261,17 @@ namespace SkillReceive.Core.Services.Skill
                 .FirstAsync();
 
         }
+
+        public async Task<bool> ExistsOnlineAsync(int id)
+        {
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .AnyAsync(o => o.Id == id);
+        }
+
+        public async Task<bool> ExistsOnHandAsync(int id)
+        {
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .AnyAsync(o => o.Id == id);
+        }
     }
 }
