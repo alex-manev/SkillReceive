@@ -49,15 +49,8 @@ namespace SkillReceive.Core.Services.Skill
             var onlineSkills = await onlineToShow
                 .Skip((currPage - 1) * skillsPerPage)
                 .Take(skillsPerPage)
-                .Select(s => new SkillServiceModel()
-                {
-                    Id = s.Id,
-                    ImageURL = s.ImageURL,
-                    PricePerMonth = s.PricePerMonth,
-                    Participants = s.Participants.Count(),
-                    Title = s.Title
-
-                }).ToListAsync();
+                .ProjectOnlineCourse()
+                .ToListAsync();
 
 
             int totalSkills = await onlineToShow.CountAsync();
@@ -105,15 +98,8 @@ namespace SkillReceive.Core.Services.Skill
             var onHandskills = await onHandToShow
                 .Skip((currPage - 1) * skillsPerPage)
                 .Take(skillsPerPage)
-                .Select(s => new SkillServiceModel()
-                {
-                    Id = s.Id,
-                    ImageURL = s.ImageURL,
-                    PricePerMonth = s.PricePerMonth,
-                    Participants = s.Participants.Count(),
-                    Title = s.Title
-
-                }).ToListAsync();
+                .ProjectOnHand()
+                .ToListAsync();
 
 
             
@@ -183,5 +169,8 @@ namespace SkillReceive.Core.Services.Skill
         {
             throw new NotImplementedException();
         }
+
+
+       
     }
 }

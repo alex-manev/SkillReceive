@@ -27,7 +27,6 @@ namespace SkillReceive.Core.Models.Skill.Skills
         [Display(Name = "Price Per Month")]
         public decimal PricePerMonth { get; set; }
 
-
         public int Participants { get; set; }
     }
 }
