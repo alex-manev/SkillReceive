@@ -1,4 +1,5 @@
-﻿<ul class="navbar-nav flex-grow-1">
+﻿@inject ICreatorService creatorService
+<ul class="navbar-nav flex-grow-1">
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="All">All Skills</a>
     </li>
@@ -7,9 +8,13 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Mine">My Skills</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Add">Create Skill</a>
-        </li>
+        if (await creatorService.ExistsByIdAsync(User.Id()))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Add">Create Skill</a>
+            </li>
+        }
+        
     }
     
 </ul>
