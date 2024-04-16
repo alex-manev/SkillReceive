@@ -21,20 +21,17 @@
                 <a asp-controller="OnlineCourse" asp-action="Delete" asp-route-id="@Model.Id"
                    class="btn btn-danger">Delete</a>
                 <p></p>
-                @* @if ()
-                {
-                    <form class="input-group-sm" asp-controller="Skill"
-                          asp-action="Rent" asp-route-id="@Model.Id" method="post">
-                        <input class="btn btn-primary" type="submit" value="Rent" />
-                    </form>
-                }
-                else
-                {
-                    <form asp-controller="Skill" asp-action="Leave"
-                          asp-route-id="@Model.Id" method="post">
-                        <input class="btn btn-primary" type="submit" value="Leave" />
-                    </form>
-                } *@
+                <form class="input-group-sm" asp-controller="OnlineCourse"
+                      asp-action="Join" asp-route-id="@Model.Id" method="post">
+                    <input class="btn btn-primary" type="submit" value="Join" />
+                </form>
+
+
+                <form asp-controller="OnlineCourse" asp-action="Leave"
+                      asp-route-id="@Model.Id" method="post">
+                    <input class="btn btn-primary" type="submit" value="Leave" />
+                </form>
+
             }
         </div>
     </div>

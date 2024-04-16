@@ -61,6 +61,6 @@ namespace SkillReceive.Infrastructure.Data.Models.Skills
         public Creator Creator { get; set; } = null!;
 
         [Comment("At Hand Experience participants")]
-        public IEnumerable<IdentityUser> Participants { get; set; } = new List<IdentityUser>();
+        public IList<IdentityUser> Participants { get; set; } = new List<IdentityUser>();
     }
 }

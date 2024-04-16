@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Enumerations;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
@@ -34,7 +35,7 @@ namespace SkillReceive.Core.Services.Skill
 
                 onlineToShow = onlineToShow
                      .Where(s => (s.Title.ToLower().Contains(normalizedSearchTerm) ||
-                     s.Description.ToLower().Contains( normalizedSearchTerm)));
+                     s.Description.ToLower().Contains(normalizedSearchTerm)));
 
             }
 
@@ -84,7 +85,7 @@ namespace SkillReceive.Core.Services.Skill
                      s.Description.ToLower().Contains(normalizedSearchTerm)));
             }
 
-            
+
 
             onHandToShow = sorting switch
             {
@@ -95,7 +96,7 @@ namespace SkillReceive.Core.Services.Skill
                 _ => onHandToShow.OrderByDescending(s => s.Id)
             };
 
-           
+
 
             var onHandskills = await onHandToShow
                 .Skip((currPage - 1) * skillsPerPage)
@@ -104,8 +105,8 @@ namespace SkillReceive.Core.Services.Skill
                 .ToListAsync();
 
 
-            
-            int totalSkills =  await onHandToShow.CountAsync();
+
+            int totalSkills = await onHandToShow.CountAsync();
 
             return new SkillQueryServiceModel()
             {
@@ -116,10 +117,10 @@ namespace SkillReceive.Core.Services.Skill
 
         public async Task<IEnumerable<string>> AllCategoriesNamesAsync()
         {
-           var onlineCat =  await repository.AllReadOnly<OnlineCourseCategory>()
-                .Select(c => c.Name)
-                .Distinct()
-                .ToListAsync();
+            var onlineCat = await repository.AllReadOnly<OnlineCourseCategory>()
+                 .Select(c => c.Name)
+                 .Distinct()
+                 .ToListAsync();
 
             var onHandCat = await repository.AllReadOnly<OnHandExperienceCategory>()
                 .Select(c => c.Name)
@@ -137,7 +138,7 @@ namespace SkillReceive.Core.Services.Skill
              await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                 .OrderByDescending(h => h.Id)
                 .Take(2)
-                .Select(h => new SkillIndexServiceModel() 
+                .Select(h => new SkillIndexServiceModel()
                 {
                     Id = h.Id,
                     ImageUrl = h.ImageURL,
@@ -164,7 +165,7 @@ namespace SkillReceive.Core.Services.Skill
 
         public async Task<IEnumerable<SkillServiceModel>> AllOnlineSkillsByCreatorIdAsync(int creatorId)
         {
-            var onlineCourses =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+            var onlineCourses = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                  .Where(c => c.CreatorId == creatorId)
                  .ProjectOnlineCourse()
                  .ToListAsync();
@@ -179,7 +180,7 @@ namespace SkillReceive.Core.Services.Skill
                  .ProjectOnHand()
                  .ToListAsync();
 
-            
+
             return onHandExps;
         }
 
@@ -223,20 +224,20 @@ namespace SkillReceive.Core.Services.Skill
             return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                 .Where(o => o.Id == id)
                 .Select(o => new OnlineDetailServiceModel()
-                { 
-                   Id = o.Id,
-                   NeededTechnologies = o.NeededTechnologies,
-                   Creator = new Models.Creator.CreatorServiceModel() 
-                   {
-                       Email = o.Creator.User.Email,
-                       PhoneNumber = o.Creator.PhoneNumber,
-                   },
-                   Category = o.Category.Name,
-                   Description = o.Description,
-                   ImageURL = o.ImageURL,
-                   Participants = o.Participants.Count(),
-                   PricePerMonth = o.PricePerMonth,
-                   Title = o.Title
+                {
+                    Id = o.Id,
+                    NeededTechnologies = o.NeededTechnologies,
+                    Creator = new Models.Creator.CreatorServiceModel()
+                    {
+                        Email = o.Creator.User.Email,
+                        PhoneNumber = o.Creator.PhoneNumber,
+                    },
+                    Category = o.Category.Name,
+                    Description = o.Description,
+                    ImageURL = o.ImageURL,
+                    Participants = o.Participants.Count(),
+                    PricePerMonth = o.PricePerMonth,
+                    Title = o.Title
                 }
                 )
                 .FirstAsync();
@@ -251,7 +252,7 @@ namespace SkillReceive.Core.Services.Skill
                 {
                     Id = o.Id,
                     Location = o.Location,
-                    Requirements = o.Requirements,  
+                    Requirements = o.Requirements,
                     Creator = new Models.Creator.CreatorServiceModel()
                     {
                         Email = o.Creator.User.Email,
@@ -291,6 +292,74 @@ namespace SkillReceive.Core.Services.Skill
         {
             await repository.DeleteAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<bool> HasJoinedOnlineByUserIdAsync(int skillId, string userId)
+        {
+            bool result = false;
+
+            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(skillId);
+
+            if (skill != null)
+            {
+                result = skill.Participants.Any(p => p.Id == userId);
+            }
+
+            return result;
+        }
+
+        public async Task<bool> HasJoinedOnHandByUserIdAsync(int skillId, string userId)
+        {
+            bool result = false;
+
+            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
+
+            if (skill != null)
+            {
+                result = skill.Participants.Any(p => p.Id == userId);
+            }
+
+            return result;
+        }
+
+        public async Task JoinOnlineAsync(int id, string userId)
+        {
+            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(id);
+
+            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+
+            if (skill != null && user != null)
+            {
+                if (skill.Participants.Any(p => p.Id == userId))
+                {
+
+                }
+                else
+                {
+                    skill.Participants.Add(user);
+                    await repository.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task JoinOnHandAsync(int id, string userId)
+        {
+            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(id);
+
+            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+
+            if (skill != null && user != null)
+            {
+                if (skill.Participants.Any(p => p.Id == userId))
+                {
+
+                }
+                else
+                {
+                    skill.Participants.Add(user);
+                    await repository.SaveChangesAsync();
+                }
+            }
         }
     }
 }

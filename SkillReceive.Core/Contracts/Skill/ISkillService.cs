@@ -45,5 +45,14 @@ namespace SkillReceive.Core.Contracts.Skill
         Task DeleteOnlineAsync(int skillId);
 
         Task DeleteOnHandAsync(int skillId);
+
+        Task<bool> HasJoinedOnlineByUserIdAsync(int skillId, string userId);
+
+        Task<bool> HasJoinedOnHandByUserIdAsync(int skillId, string userId);
+
+        Task JoinOnlineAsync(int id, string userId);
+
+        Task JoinOnHandAsync(int id, string userId);
+
     }
 }

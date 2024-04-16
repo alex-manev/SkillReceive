@@ -13,7 +13,8 @@ namespace System.Linq
                     Id = o.Id,
                     ImageURL = o.ImageURL,
                     Title = o.Title,
-                    PricePerMonth = o.PricePerMonth
+                    PricePerMonth = o.PricePerMonth,
+                    Participants = o.Participants.Count()
                 });
         }
 
@@ -25,7 +26,8 @@ namespace System.Linq
                     Id = o.Id,
                     ImageURL = o.ImageURL,
                     Title = o.Title,
-                    PricePerMonth = o.PricePerMonth
+                    PricePerMonth = o.PricePerMonth,
+                    Participants = o.Participants.Count()
                 });
         }
     }
