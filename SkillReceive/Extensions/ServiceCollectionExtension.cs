@@ -12,6 +12,7 @@ using SkillReceive.Core.Contracts.OnHandExperience;
 using SkillReceive.Core.Services.OnHandExperience;
 using SkillReceive.Core.Contracts;
 using SkillReceive.Core.Services;
+using SkillReceive.Infrastructure.Data.Models;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -42,7 +43,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<IdentityUser>(
+            services.AddDefaultIdentity<ApplicationUser>(
                 options => 
                 {
 

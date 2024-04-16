@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SkillReceive.Core.Contracts;
 using SkillReceive.Core.Models.Statistics;
 using SkillReceive.Infrastructure.Data.Common;
+using SkillReceive.Infrastructure.Data.Models;
 
 namespace SkillReceive.Core.Services
 {
@@ -23,7 +24,7 @@ namespace SkillReceive.Core.Services
 
             int totalParticipants = 0;
 
-            var users = await repository.AllReadOnly<IdentityUser>().CountAsync();
+            var users = await repository.AllReadOnly<ApplicationUser>().CountAsync();
 
             
             return new StatisticServiceModel()

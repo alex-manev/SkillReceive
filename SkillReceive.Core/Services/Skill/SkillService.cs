@@ -7,6 +7,7 @@ using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using SkillReceive.Core.Models.Skill.Skills;
 using SkillReceive.Infrastructure.Data.Common;
+using SkillReceive.Infrastructure.Data.Models;
 using SkillReceive.Infrastructure.Data.Models.Categories;
 
 namespace SkillReceive.Core.Services.Skill
@@ -327,7 +328,7 @@ namespace SkillReceive.Core.Services.Skill
         {
             var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(id);
 
-            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
             if (skill != null && user != null)
             {
@@ -347,7 +348,7 @@ namespace SkillReceive.Core.Services.Skill
         {
             var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(id);
 
-            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
             if (skill != null && user != null)
             {
@@ -368,7 +369,7 @@ namespace SkillReceive.Core.Services.Skill
         {
             var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(skillId);
 
-            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
             if (skill != null && user != null)
             {
@@ -388,7 +389,7 @@ namespace SkillReceive.Core.Services.Skill
         {
             var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
 
-            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
             if (skill != null && user != null)
             {
