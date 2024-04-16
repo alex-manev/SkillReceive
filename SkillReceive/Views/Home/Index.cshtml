@@ -8,9 +8,9 @@
 @if (!skills.Any())
 {
     <div class="mt-4 p-5 bg-light">
-        <h1 class="display-4">Welcome to the best place for renting houses!</h1>
+        <h1 class="display-4">Welcome to the best place for learning skills!</h1>
         <p class="lead">
-            There are no houses in the system currently available
+            There are no skills in the system currently available
             so why don't you just add one?
         </p>
         <hr class="my-4">
@@ -52,3 +52,33 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+
+<div class="mb-5"></div>
+
+<div class="row">
+ <div class="col-12 text-center">
+  <button class="btn btn-primary" id="statistics-button">Show Statistics</button>
+ </div>
+</div>
+
+<div class="mt-4 p-5 bg-light d-none" id="statistics">
+    <div class="row">
+        <h2 class="col-md-2 text-center" id="total-skills"></h2>
+        <h2 class="col-md-2 text-center" id="total-participants"></h2>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $('#statistics-button').on('click', ev => 
+    {
+        $.get('/api/statistic', data => {
+            $('#total-skills').text(data.totalSkills + ' Skills');
+            $('#total-participants').text(data.totalParticipants + ' Participants');
+            $('#statistics').removeClass('d-none');
+            $('#statistics-button').hide();
+
+        });
+    })
+</script>
+}
