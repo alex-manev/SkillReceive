@@ -1,4 +1,5 @@
 ﻿using SkillReceive.Core.Contracts;
+using SkillReceive.Core.Resources;
 using System.ComponentModel.DataAnnotations;
 using static SkillReceive.Core.Constants.MessageConstants;
 using static SkillReceive.Infrastructure.Constants.DataConstants.OnlineCourses.OnlineCourse;
@@ -7,7 +8,7 @@ namespace SkillReceive.Core.Models.Skill.OnlineCourse
 {
     public class OnlineFormModel : ISkillModel
     {
-        [Required(ErrorMessage = RequiredMessage)]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(SharedResource))]
         [StringLength(TitleMaxLength,
             MinimumLength = TitleMinLength,
             ErrorMessage = LengthMessage)]
