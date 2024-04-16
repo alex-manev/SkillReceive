@@ -4,6 +4,7 @@ using SkillReceive.Attributes;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Contracts.Skill;
+using SkillReceive.Core.Exceptions;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using System.Security.Claims;
 
@@ -189,12 +190,19 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await creatorService.ExistsByIdAsync(User.Id()))
+            try
             {
-                return Unauthorized();
-            }
+                if (await creatorService.ExistsByIdAsync(User.Id()))
+                {
+                    throw new UnauthorizedActionException();
+                }
 
-            await skillService.JoinOnlineAsync(id, User.Id());
+                await skillService.JoinOnlineAsync(id, User.Id());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return RedirectToAction(nameof(Mine),"Skill");
         }
@@ -207,12 +215,19 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await creatorService.ExistsByIdAsync(User.Id()))
+            try
             {
-                return Unauthorized();
-            }
+                if (await creatorService.ExistsByIdAsync(User.Id()))
+                {
+                    throw new UnauthorizedActionException();
+                }
 
-            await skillService.LeaveOnline(id, User.Id());
+                await skillService.LeaveOnline(id, User.Id());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return RedirectToAction(nameof(Mine), "Skill");
         }

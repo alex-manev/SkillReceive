@@ -5,6 +5,7 @@ using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnHandExperience;
 using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Contracts.Skill;
+using SkillReceive.Core.Exceptions;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using SkillReceive.Core.Services.OnlineCourse;
@@ -20,7 +21,7 @@ namespace SkillReceive.Controllers
         private readonly ISkillService skillService;
 
         public OnHandExperienceController(ICreatorService _creatorService, IOnHandService _onHandService, ISkillService _skillService)
-        {                                 
+        {
             creatorService = _creatorService;
             onHandService = _onHandService;
             skillService = _skillService;
@@ -191,12 +192,22 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await creatorService.ExistsByIdAsync(User.Id()))
+            try
             {
-                return Unauthorized();
+                if (await creatorService.ExistsByIdAsync(User.Id()))
+                {
+                    throw new UnauthorizedActionException();
+                }
+
+                await skillService.JoinOnHandAsync(id, User.Id());
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
 
-            await skillService.JoinOnHandAsync(id, User.Id());
+
 
             return RedirectToAction(nameof(Mine), "Skill");
         }
@@ -209,12 +220,19 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await creatorService.ExistsByIdAsync(User.Id()))
+            try
             {
-                return Unauthorized();
-            }
+                if (await creatorService.ExistsByIdAsync(User.Id()))
+                {
+                    throw new UnauthorizedActionException();
+                }
 
-            await skillService.LeaveOnHand(id, User.Id());
+                await skillService.LeaveOnHand(id, User.Id());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return RedirectToAction(nameof(Mine), "Skill");
         }

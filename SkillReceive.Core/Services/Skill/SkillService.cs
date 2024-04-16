@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Enumerations;
+using SkillReceive.Core.Exceptions;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using SkillReceive.Core.Models.Skill.Skills;
@@ -332,7 +333,7 @@ namespace SkillReceive.Core.Services.Skill
             {
                 if (skill.Participants.Any(p => p.Id == userId))
                 {
-
+                    throw new AlreadyJoinedActionException("You have already joined this course.");
                 }
                 else
                 {
@@ -352,6 +353,7 @@ namespace SkillReceive.Core.Services.Skill
             {
                 if (skill.Participants.Any(p => p.Id == userId))
                 {
+                    throw new AlreadyJoinedActionException("You have already joined this course.");
 
                 }
                 else
@@ -375,6 +377,10 @@ namespace SkillReceive.Core.Services.Skill
                     skill.Participants.Remove(user);
                     await repository.SaveChangesAsync();
                 }
+                else
+                {
+                    throw new NotAmemberException("You are not a participant in this course.");
+                }
             }
         }
 
@@ -390,6 +396,10 @@ namespace SkillReceive.Core.Services.Skill
                 {
                     skill.Participants.Remove(user);
                     await repository.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new NotAmemberException("You are not a participant in this course.");
                 }
             }
         }
