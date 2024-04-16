@@ -10,6 +10,8 @@ using SkillReceive.Infrastructure.Data;
 using SkillReceive.Infrastructure.Data.Common;
 using SkillReceive.Core.Contracts.OnHandExperience;
 using SkillReceive.Core.Services.OnHandExperience;
+using SkillReceive.Core.Contracts;
+using SkillReceive.Core.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -21,6 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ICreatorService, CreatorService>();
             services.AddScoped<IOnlineCourseService, OnlineCourseService>();
             services.AddScoped<IOnHandService, OnHandService>();
+            services.AddScoped<IStatisticService, StatisticService>();
 
             return services;
         }
