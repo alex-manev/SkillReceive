@@ -1,6 +1,8 @@
-﻿namespace SkillReceive.Core.Models.Skill.OnHandExperience
+﻿using SkillReceive.Core.Contracts;
+
+namespace SkillReceive.Core.Models.Skill.OnHandExperience
 {
-    public class OnHandDetailsViewModel
+    public class OnHandDetailsViewModel : ISkillModel
     {
         public int Id { get; set; }
 

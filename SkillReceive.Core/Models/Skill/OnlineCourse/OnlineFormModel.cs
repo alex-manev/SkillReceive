@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SkillReceive.Core.Contracts;
+using System.ComponentModel.DataAnnotations;
 using static SkillReceive.Core.Constants.MessageConstants;
 using static SkillReceive.Infrastructure.Constants.DataConstants.OnlineCourses.OnlineCourse;
 
 namespace SkillReceive.Core.Models.Skill.OnlineCourse
 {
-    public class OnlineFormModel
+    public class OnlineFormModel : ISkillModel
     {
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(TitleMaxLength,

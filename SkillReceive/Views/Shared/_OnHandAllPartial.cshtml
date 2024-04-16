@@ -12,7 +12,7 @@
             <h6>(Participants: @(Model.Participants))</h6>
             <br />
             <a asp-controller="OnHandExperience" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
+               asp-route-information="@Model.GetInformation()" class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
             {
                 <a asp-controller="OnHandExperience" asp-action="Edit" asp-route-id="@Model.Id"

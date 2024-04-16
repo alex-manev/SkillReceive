@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using SkillReceive.Attributes;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Exceptions;
+using SkillReceive.Core.Extensions;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using System.Security.Claims;
 
@@ -42,14 +44,20 @@ namespace SkillReceive.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string information)
         {
             if (await skillService.ExistsAsync(id) == false)
             {
                 return BadRequest();
             }
 
+
             var model = await skillService.OnlineDetailsByIdAsync(id);
+
+            if (information != model.GetInformation())
+            {
+                return BadRequest();
+            }
 
             return View(model);
         }
@@ -87,7 +95,7 @@ namespace SkillReceive.Controllers
 
             int newOnlineCourseId = await onlineCourseService.CreateAsync(model, creatorId ?? 0);
 
-            return RedirectToAction(nameof(Details), new { id = newOnlineCourseId });
+            return RedirectToAction(nameof(Details), new { id = newOnlineCourseId , information = model.GetInformation()});
         }
 
         [HttpGet]
@@ -135,7 +143,7 @@ namespace SkillReceive.Controllers
 
             await onlineCourseService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(Details), new { id });
+            return RedirectToAction(nameof(Details), new { id , Information = model.GetInformation()});
         }
 
         [HttpGet]

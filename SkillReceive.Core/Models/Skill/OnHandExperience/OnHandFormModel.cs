@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SkillReceive.Core.Contracts;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using System.ComponentModel.DataAnnotations;
 using static SkillReceive.Core.Constants.MessageConstants;
@@ -6,7 +7,7 @@ using static SkillReceive.Infrastructure.Constants.DataConstants.OnHandExperienc
 
 namespace SkillReceive.Core.Models.Skill.OnHandExperience
 {
-    public class OnHandFormModel
+    public class OnHandFormModel :ISkillModel
     {
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(TitleMaxLength,

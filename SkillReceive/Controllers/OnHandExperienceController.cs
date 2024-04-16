@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkillReceive.Attributes;
+using SkillReceive.Core.Contracts;
 using SkillReceive.Core.Contracts.Creator;
 using SkillReceive.Core.Contracts.OnHandExperience;
-using SkillReceive.Core.Contracts.OnlineCourse;
 using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Exceptions;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
-using SkillReceive.Core.Models.Skill.OnlineCourse;
-using SkillReceive.Core.Services.OnlineCourse;
 using System.Security.Claims;
 
 namespace SkillReceive.Controllers
@@ -53,6 +51,7 @@ namespace SkillReceive.Controllers
             }
 
             var model = await skillService.OnHandDetailsByIdAsync(id);
+
 
             return View(model);
         }

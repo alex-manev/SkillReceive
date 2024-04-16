@@ -1,6 +1,8 @@
-﻿namespace SkillReceive.Core.Models.Skill.OnlineCourse
+﻿using SkillReceive.Core.Contracts;
+
+namespace SkillReceive.Core.Models.Skill.OnlineCourse
 {
-    public class OnlineDetailsViewModel
+    public class OnlineDetailsViewModel : ISkillModel
     {
         public int Id { get; set; }
 
