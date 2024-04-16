@@ -8,9 +8,9 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
     public class SeedData
     {
         //Users with different roles
-        public IdentityUser OnlineCourseUser { get; set; } = null!;
-        public IdentityUser OnHandExperienceUser { get; set; } = null!;
-        public IdentityUser GuestUser { get; set; } = null!;
+        public ApplicationUser OnlineCourseUser { get; set; } = null!;
+        public ApplicationUser OnHandExperienceUser { get; set; } = null!;
+        public ApplicationUser GuestUser { get; set; } = null!;
 
 
         //Types of creators
@@ -52,9 +52,9 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
 
         private void SeedUsers() 
         {
-            var hasher = new PasswordHasher<IdentityUser>();
+            var hasher = new PasswordHasher<ApplicationUser>();
 
-            OnlineCourseUser = new IdentityUser()
+            OnlineCourseUser = new ApplicationUser()
             {
                 Id = "dea12856-c198-4129-b3f3-b893d8395082",
                 UserName = "onlineUser@mail.com",
@@ -68,7 +68,7 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
 
 
             
-            OnHandExperienceUser= new IdentityUser()
+            OnHandExperienceUser= new ApplicationUser()
             {
                 Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                 UserName = "realLife@mail.com",
@@ -79,7 +79,7 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
 
             OnHandExperienceUser.PasswordHash = hasher.HashPassword(OnHandExperienceUser, "realLife123");
 
-            GuestUser = new IdentityUser()
+            GuestUser = new ApplicationUser()
             {
                 Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                 UserName = "guest@mail.com",
@@ -163,7 +163,7 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 ImageURL = "https://www.tutorialrepublic.com/lib/images/javascript-illustration.png",
                 CategoryId = ProgrammingCategory.Id,
                 CreatorId = OnlineCourseCreator.Id,
-                Participants = new List<IdentityUser>()
+                Participants = new List<ApplicationUser>()
             };
         }
 
@@ -180,7 +180,7 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 ImageURL = "https://media.istockphoto.com/id/1305166860/vector/volleyball-sports-glyph-icon.jpg?s=612x612&w=0&k=20&c=t67-m41qaiSnaOuWjLtkytN1RAqAiiXc9QmLu68fTS8=",
                 CategoryId = SportsCategory.Id,
                 CreatorId = OnHandCourseCreator.Id,
-                Participants = new List<IdentityUser>()
+                Participants = new List<ApplicationUser>()
             };
         }
     }

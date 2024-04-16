@@ -10,7 +10,7 @@ using SkillReceive.Infrastructure.Data.SeedDb.UserConfiguration;
 
 namespace SkillReceive.Infrastructure.Data
 {
-    public class SkillReceiveDbContext : IdentityDbContext
+    public class SkillReceiveDbContext : IdentityDbContext<ApplicationUser>
     {
         public SkillReceiveDbContext(DbContextOptions<SkillReceiveDbContext> options)
             : base(options)

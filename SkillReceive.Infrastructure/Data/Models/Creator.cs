@@ -27,7 +27,7 @@ namespace SkillReceive.Infrastructure.Data.Models
 
         [ForeignKey(nameof(UserId))]
         [Comment("User")]
-        public IdentityUser User { get; set; } = null!;
+        public ApplicationUser User { get; set; } = null!;
 
         public List<OnHandExperience> OnHandExperiences { get; set; } = new List<OnHandExperience>();
 

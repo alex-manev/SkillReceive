@@ -56,6 +56,6 @@ namespace SkillReceive.Infrastructure.Data.Models.Skills
         public Creator Creator { get; set; } = null!;
 
         [Comment("Online course participants")]
-        public IList<IdentityUser> Participants { get; set; } = new List<IdentityUser>();
+        public IList<ApplicationUser> Participants { get; set; } = new List<ApplicationUser>();
     }
 }

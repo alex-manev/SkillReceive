@@ -78,5 +78,15 @@ namespace SkillReceive.Infrastructure.Constants
 
             public const int CreatorPhoneNumberMinLength = 10;
         }
+
+        // Skill Participant data constants class 
+        public class User
+        {
+            public const int UserFirstNameMaxLength = 50;
+            public const int UserFirstNameMinLength = 1;
+
+            public const int UserLastNameMaxLength = 50;
+            public const int UserLastNameMinLength = 1;
+        }
     }
 }
