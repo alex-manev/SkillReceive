@@ -361,5 +361,37 @@ namespace SkillReceive.Core.Services.Skill
                 }
             }
         }
+
+        public async Task LeaveOnline(int skillId, string userId)
+        {
+            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(skillId);
+
+            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+
+            if (skill != null && user != null)
+            {
+                if (skill.Participants.Any(p => p.Id == userId))
+                {
+                    skill.Participants.Remove(user);
+                    await repository.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task LeaveOnHand(int skillId, string userId)
+        {
+            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
+
+            var user = await repository.GetByIdAsync<IdentityUser>(userId);
+
+            if (skill != null && user != null)
+            {
+                if (skill.Participants.Any(p => p.Id == userId))
+                {
+                    skill.Participants.Remove(user);
+                    await repository.SaveChangesAsync();
+                }
+            }
+        }
     }
 }

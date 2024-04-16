@@ -204,7 +204,19 @@ namespace SkillReceive.Controllers
         [HttpPost]
         public async Task<IActionResult> Leave(int id)
         {
-            return RedirectToAction(nameof(Mine));
+            if (await skillService.ExistsOnHandAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (await creatorService.ExistsByIdAsync(User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            await skillService.LeaveOnHand(id, User.Id());
+
+            return RedirectToAction(nameof(Mine), "Skill");
         }
     }
 }
