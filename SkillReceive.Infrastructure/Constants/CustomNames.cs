@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SkillReceive.Core.Constants
+namespace SkillReceive.Infrastructure.Constants
 {
     public class CustomNames
     {

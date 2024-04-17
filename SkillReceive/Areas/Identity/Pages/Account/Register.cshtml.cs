@@ -13,7 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 using static SkillReceive.Infrastructure.Constants.DataConstants.User;
-using static SkillReceive.Core.Constants.CustomNames;
+using static SkillReceive.Infrastructure.Constants.CustomNames;
 
 namespace SkillReceive.Areas.Identity.Pages.Account
 {

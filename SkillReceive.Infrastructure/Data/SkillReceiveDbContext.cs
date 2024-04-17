@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SkillReceive.Infrastructure.Data.Models;
 using SkillReceive.Infrastructure.Data.Models.Categories;
 using SkillReceive.Infrastructure.Data.Models.Skills;
+using SkillReceive.Infrastructure.Data.SeedDb;
 using SkillReceive.Infrastructure.Data.SeedDb.CategoryConfiguration;
 using SkillReceive.Infrastructure.Data.SeedDb.CreatorConfiguration;
 using SkillReceive.Infrastructure.Data.SeedDb.SkillTypesConfiguration;
@@ -26,6 +27,7 @@ namespace SkillReceive.Infrastructure.Data
             builder.ApplyConfiguration(new OnlineCourseCategoryConfiguration());
             builder.ApplyConfiguration(new OnHandExperienceConfiguration());
             builder.ApplyConfiguration(new OnlineCourseConfiguration());
+            builder.ApplyConfiguration(new UserClaimsConfiguration());
 
 
 

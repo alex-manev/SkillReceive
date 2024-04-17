@@ -34,7 +34,7 @@ namespace SkillReceive.Infrastructure.Migrations
 
                     b.HasIndex("ParticipantsId");
 
-                    b.ToTable("ApplicationUserOnHandExperience");
+                    b.ToTable("ApplicationUserOnHandExperience", (string)null);
                 });
 
             modelBuilder.Entity("ApplicationUserOnlineCourse", b =>
@@ -49,7 +49,7 @@ namespace SkillReceive.Infrastructure.Migrations
 
                     b.HasIndex("ParticipantsId");
 
-                    b.ToTable("ApplicationUserOnlineCourse");
+                    b.ToTable("ApplicationUserOnlineCourse", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -337,7 +337,7 @@ namespace SkillReceive.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OnHandExperienceCategories");
+                    b.ToTable("OnHandExperienceCategories", (string)null);
 
                     b.HasData(
                         new
@@ -374,7 +374,7 @@ namespace SkillReceive.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OnlineCourseCategories");
+                    b.ToTable("OnlineCourseCategories", (string)null);
 
                     b.HasComment("Online course category");
 
@@ -423,7 +423,7 @@ namespace SkillReceive.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Creators");
+                    b.ToTable("Creators", (string)null);
 
                     b.HasComment("Skill Creator");
 
@@ -508,7 +508,7 @@ namespace SkillReceive.Infrastructure.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("OnHandExperiences");
+                    b.ToTable("OnHandExperiences", (string)null);
 
                     b.HasComment("On Hand Experience");
 
@@ -582,7 +582,7 @@ namespace SkillReceive.Infrastructure.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("OnlineCourses");
+                    b.ToTable("OnlineCourses", (string)null);
 
                     b.HasComment("Online Course");
 

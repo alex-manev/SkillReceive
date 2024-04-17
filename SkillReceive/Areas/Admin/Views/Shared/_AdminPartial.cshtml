@@ -8,7 +8,7 @@
 
     if (SignInManager.IsSignedIn(User))
     {
-        username = User.FindFirstValue(SkillReceive.Core.Constants.CustomNames.UserFullNameClaim) ?? string.Empty;
+        username = User.FindFirstValue(SkillReceive.Infrastructure.Constants.CustomNames.UserFullNameClaim) ?? string.Empty;
     }
 }
 

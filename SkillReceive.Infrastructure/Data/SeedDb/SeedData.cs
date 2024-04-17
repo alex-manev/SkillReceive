@@ -2,6 +2,7 @@
 using SkillReceive.Infrastructure.Data.Models;
 using SkillReceive.Infrastructure.Data.Models.Categories;
 using SkillReceive.Infrastructure.Data.Models.Skills;
+using static SkillReceive.Infrastructure.Constants.CustomNames;
 
 namespace SkillReceive.Infrastructure.Data.SeedDb
 {
@@ -9,6 +10,12 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
     {
         //Users with different roles
         public ApplicationUser OnlineCourseUser { get; set; } = null!;
+
+        public IdentityUserClaim<string> OnlineUserClaim { get; set; } = null!;
+
+        public IdentityUserClaim<string> OnHandUserClaim { get; set; } = null!;
+
+        public IdentityUserClaim<string> AdminUserClaim { get; set; } = null!;
         public ApplicationUser OnHandExperienceUser { get; set; } = null!;
         public ApplicationUser AdminUser { get; set; } = null!;
 
@@ -67,6 +74,14 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 LastName = "User"
             };
 
+            OnlineUserClaim = new IdentityUserClaim<string>()
+            {
+                Id = 1,
+                ClaimType = UserFullNameClaim,
+                ClaimValue = "Online User",
+                UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+            };
+
             OnlineCourseUser.PasswordHash = hasher.HashPassword(OnlineCourseUser, "online123");
 
 
@@ -83,6 +98,14 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 LastName = "Life"
             };
 
+            OnHandUserClaim = new IdentityUserClaim<string>()
+            {
+                Id = 2,
+                ClaimType = UserFullNameClaim,
+                ClaimValue = "Real Life",
+                UserId = "02174cf0–9412–4cfe-afbf-59f706d72cf6"
+            };
+
             OnHandExperienceUser.PasswordHash = hasher.HashPassword(OnHandExperienceUser, "realLife123");
 
             AdminUser = new ApplicationUser()
@@ -94,6 +117,14 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 NormalizedEmail = "ADMIN@MAIL.COM",
                 FirstName = "Great",
                 LastName = "Admin"
+            };
+
+            AdminUserClaim = new IdentityUserClaim<string>()
+            {
+                Id= 3,
+                ClaimType= UserFullNameClaim,
+                ClaimValue = "Great Admin",
+                UserId = "df83445d-7e23-4fea-a2c5-5cd1232083c4"
             };
 
             AdminUser.PasswordHash = hasher.HashPassword(AdminUser, "admin123");
