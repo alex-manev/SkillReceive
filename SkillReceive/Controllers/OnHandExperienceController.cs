@@ -99,7 +99,7 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -117,7 +117,7 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -146,7 +146,7 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            if (await onHandService.HasCreatorWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -173,7 +173,7 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await onHandService.HasCreatorWithIdAsync(model.Id, User.Id()) == false)
+            if (await onHandService.HasCreatorWithIdAsync(model.Id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -193,7 +193,7 @@ namespace SkillReceive.Controllers
 
             try
             {
-                if (await creatorService.ExistsByIdAsync(User.Id()))
+                if (await creatorService.ExistsByIdAsync(User.Id()) && User.IsAdmin() == false)
                 {
                     throw new UnauthorizedActionException();
                 }
@@ -221,7 +221,7 @@ namespace SkillReceive.Controllers
 
             try
             {
-                if (await creatorService.ExistsByIdAsync(User.Id()))
+                if (await creatorService.ExistsByIdAsync(User.Id()) && User.IsAdmin() == false)
                 {
                     throw new UnauthorizedActionException();
                 }

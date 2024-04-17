@@ -1,4 +1,7 @@
 ﻿@model SkillServiceModel
+@inject ICreatorService creatorService
+@inject IOnHandService onhandService
+@inject ISkillService skillService
 
 <div class="col-md-4">
     <div class="card mb-3">
@@ -15,21 +18,33 @@
                asp-route-information="@Model.GetInformation()" class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
             {
-                <a asp-controller="OnHandExperience" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Edit</a>
-                <a asp-controller="OnHandExperience" asp-action="Delete" asp-route-id="@Model.Id"
-                   class="btn btn-danger">Delete</a>
+                if (await onhandService.HasCreatorWithIdAsync(Model.Id, User.Id()) ||
+                User.IsAdmin())
+                {
+                    <a asp-controller="OnHandExperience" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+                    <a asp-controller="OnHandExperience" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                }
                 <p></p>
 
-                <form class="input-group-sm" asp-controller="OnHandExperience"
-                      asp-action="Join" asp-route-id="@Model.Id" method="post">
-                    <input class="btn btn-primary" type="submit" value="Join" />
-                </form>
+                if (await creatorService.ExistsByIdAsync(User.Id()) == false || User.IsAdmin())
+                {
+                    <form class="input-group-sm" asp-controller="OnHandExperience"
+                          asp-action="Join" asp-route-id="@Model.Id" method="post">
+                        <input class="btn btn-primary" type="submit" value="Join" />
+                    </form>
+                }
+                else if (await skillService.HasJoinedOnHandByUserIdAsync(Model.Id, User.Id()))
+                {
+                    <form asp-controller="OnHandExperience" asp-action="Leave"
+                          asp-route-id="@Model.Id" method="post">
+                        <input class="btn btn-primary" type="submit" value="Leave" />
+                    </form>
+                }
 
-                <form asp-controller="OnHandExperience" asp-action="Leave"
-                      asp-route-id="@Model.Id" method="post">
-                    <input class="btn btn-primary" type="submit" value="Leave" />
-                </form>
+
+
 
             }
         </div>

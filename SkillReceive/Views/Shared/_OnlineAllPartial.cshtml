@@ -19,7 +19,8 @@
                asp-route-information="@Model.GetInformation()" class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
             {
-                if (await onlineService.HasCreatorWithIdAsync(Model.Id, User.Id()))
+                if (await onlineService.HasCreatorWithIdAsync(Model.Id, User.Id()) || 
+                User.IsAdmin())
                 {
                     <a asp-controller="OnlineCourse" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
@@ -28,14 +29,14 @@
 
                 }
                 <p></p>
-                if (await creatorService.ExistsByIdAsync(User.Id()) == false)
+                if (await creatorService.ExistsByIdAsync(User.Id()) == false || User.IsAdmin())
                 {
                     <form class="input-group-sm" asp-controller="OnlineCourse"
                           asp-action="Join" asp-route-id="@Model.Id" method="post">
                         <input class="btn btn-primary" type="submit" value="Join" />
                     </form>
                 } 
-                else if (await skillService.HasJoinedOnHandByUserIdAsync(Model.Id, User.Id()))
+                else if (await skillService.HasJoinedOnlineByUserIdAsync(Model.Id, User.Id()))
                 { 
                     <form asp-controller="OnlineCourse" asp-action="Leave"
                           asp-route-id="@Model.Id" method="post">

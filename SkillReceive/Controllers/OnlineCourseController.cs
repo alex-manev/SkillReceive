@@ -101,12 +101,12 @@ namespace SkillReceive.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (await skillService.ExistsOnlineAsync(id) == false)
+            if (await skillService.ExistsOnlineAsync(id) == false )
             {
                 return BadRequest();
             }
 
-            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id())  == false)
+            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id())  == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -124,7 +124,7 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -154,7 +154,7 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id()) == false)
+            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -180,7 +180,7 @@ namespace SkillReceive.Controllers
                 return BadRequest();
             }
 
-            if (await onlineCourseService.HasCreatorWithIdAsync(model.Id, User.Id()) == false)
+            if (await onlineCourseService.HasCreatorWithIdAsync(model.Id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -200,7 +200,7 @@ namespace SkillReceive.Controllers
 
             try
             {
-                if (await creatorService.ExistsByIdAsync(User.Id()))
+                if (await creatorService.ExistsByIdAsync(User.Id()) && User.IsAdmin() == false)
                 {
                     throw new UnauthorizedActionException();
                 }
@@ -225,7 +225,7 @@ namespace SkillReceive.Controllers
 
             try
             {
-                if (await creatorService.ExistsByIdAsync(User.Id()))
+                if (await creatorService.ExistsByIdAsync(User.Id()) && User.IsAdmin() == false)
                 {
                     throw new UnauthorizedActionException();
                 }
