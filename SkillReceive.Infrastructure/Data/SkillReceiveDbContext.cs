@@ -13,22 +13,35 @@ namespace SkillReceive.Infrastructure.Data
 {
     public class SkillReceiveDbContext : IdentityDbContext<ApplicationUser>
     {
-        public SkillReceiveDbContext(DbContextOptions<SkillReceiveDbContext> options)
+        private bool _seedDb;
+
+        public SkillReceiveDbContext(DbContextOptions<SkillReceiveDbContext> options, bool seed = true)
             : base(options)
         {
+            if (Database.IsRelational())
+            {
+                Database.Migrate();
+            }
+            else
+            {
+                Database.EnsureCreated();
+            }
 
+            _seedDb = seed;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new CreatorConfiguration());
-            builder.ApplyConfiguration(new OnHandExperienceCategoryConfiguration());
-            builder.ApplyConfiguration(new OnlineCourseCategoryConfiguration());
-            builder.ApplyConfiguration(new OnHandExperienceConfiguration());
-            builder.ApplyConfiguration(new OnlineCourseConfiguration());
-            builder.ApplyConfiguration(new UserClaimsConfiguration());
-
+            if (_seedDb)
+            {
+                builder.ApplyConfiguration(new UserConfiguration());
+                builder.ApplyConfiguration(new CreatorConfiguration());
+                builder.ApplyConfiguration(new OnHandExperienceCategoryConfiguration());
+                builder.ApplyConfiguration(new OnlineCourseCategoryConfiguration());
+                builder.ApplyConfiguration(new OnHandExperienceConfiguration());
+                builder.ApplyConfiguration(new OnlineCourseConfiguration());
+                builder.ApplyConfiguration(new UserClaimsConfiguration());
+            }
 
 
             base.OnModelCreating(builder);

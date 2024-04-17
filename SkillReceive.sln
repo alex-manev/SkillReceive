@@ -5,9 +5,11 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillReceive", "SkillReceive\SkillReceive.csproj", "{2F90F449-2E67-43EB-B6B6-BEF6D6B052D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillReceive.Core", "SkillReceive.Core\SkillReceive.Core.csproj", "{2D99D87C-C6B4-459C-BD4B-1E2452DED172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillReceive.Core", "SkillReceive.Core\SkillReceive.Core.csproj", "{2D99D87C-C6B4-459C-BD4B-1E2452DED172}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillReceive.Infrastructure", "SkillReceive.Infrastructure\SkillReceive.Infrastructure.csproj", "{0438172A-D501-4A4B-9032-B72B8F652ED1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillReceive.Infrastructure", "SkillReceive.Infrastructure\SkillReceive.Infrastructure.csproj", "{0438172A-D501-4A4B-9032-B72B8F652ED1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillReceive.Tests", "SkillReceive.Tests\SkillReceive.Tests.csproj", "{F98E9051-C15D-4E9E-9E87-6E33F611250E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{0438172A-D501-4A4B-9032-B72B8F652ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0438172A-D501-4A4B-9032-B72B8F652ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0438172A-D501-4A4B-9032-B72B8F652ED1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F98E9051-C15D-4E9E-9E87-6E33F611250E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F98E9051-C15D-4E9E-9E87-6E33F611250E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F98E9051-C15D-4E9E-9E87-6E33F611250E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F98E9051-C15D-4E9E-9E87-6E33F611250E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
