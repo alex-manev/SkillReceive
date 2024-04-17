@@ -9,6 +9,7 @@ using SkillReceive.Core.Exceptions;
 using SkillReceive.Core.Extensions;
 using SkillReceive.Core.Models.Skill.OnlineCourse;
 using System.Security.Claims;
+using static SkillReceive.Core.Constants.MessageConstants;
 
 namespace SkillReceive.Controllers
 {
@@ -211,6 +212,8 @@ namespace SkillReceive.Controllers
             {
                 throw;
             }
+
+            TempData[UserMessageSuccess] = "You have joined the course successfully";
 
             return RedirectToAction(nameof(Mine),"Skill");
         }
