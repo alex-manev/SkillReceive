@@ -19,6 +19,7 @@ builder.Services.AddControllersWithViews(options =>
     .AddDataAnnotationsLocalization();
 
 builder.Services.AddApplicationServices();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
