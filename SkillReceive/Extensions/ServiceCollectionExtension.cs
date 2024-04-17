@@ -44,7 +44,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
             services.AddDefaultIdentity<ApplicationUser>(
-                options => 
+                options =>
                 {
 
                     options.SignIn.RequireConfirmedAccount = false;
@@ -54,6 +54,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     options.Password.RequireUppercase = false;
                 }
                 )
+                .AddRoles < IdentityRole>()
     .AddEntityFrameworkStores<SkillReceiveDbContext>();
 
             return services;
