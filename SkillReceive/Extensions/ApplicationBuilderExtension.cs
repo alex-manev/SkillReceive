@@ -2,11 +2,11 @@
 using SkillReceive.Infrastructure.Data.Models;
 using static SkillReceive.Core.Constants.RoleConstants;
 
-namespace SkillReceive.Extensions
+namespace Microsoft.AspNetCore.Builder
 {
     public static class ApplicationBuilderExtension
     {
-        public static async Task CreateAdminRole(this IApplicationBuilder app)
+        public static async Task CreateAdminRoleAsync(this IApplicationBuilder app)
         {
             using var scope = app.ApplicationServices.CreateScope();
 
