@@ -54,6 +54,11 @@ namespace SkillReceive.Controllers
 
             SkillMineModel model;
 
+            if (User.IsAdmin()) 
+            {
+                return RedirectToAction("Mine", "Skill", new {area = "Admin" });
+            }
+
             if (await creatorService.ExistsByIdAsync(userId))
             {
                 int creatorId = await creatorService.GetCreatorIdAsync(userId) ?? 0;

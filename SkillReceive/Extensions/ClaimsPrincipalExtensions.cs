@@ -1,5 +1,5 @@
 ﻿
-using static SkillReceive.Core.Constants.RoleConstants;
+using static SkillReceive.Core.Constants.AdminConstants;
 
 
 namespace System.Security.Claims

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SkillReceive.Infrastructure.Data.Models;
-using static SkillReceive.Core.Constants.RoleConstants;
+using static SkillReceive.Core.Constants.AdminConstants;
 
 namespace Microsoft.AspNetCore.Builder
 {
