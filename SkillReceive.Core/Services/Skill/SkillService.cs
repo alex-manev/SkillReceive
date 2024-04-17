@@ -231,6 +231,7 @@ namespace SkillReceive.Core.Services.Skill
                     NeededTechnologies = o.NeededTechnologies,
                     Creator = new Models.Creator.CreatorServiceModel()
                     {
+                        FullName = $"{o.Creator.User.FirstName} {o.Creator.User.LastName}",
                         Email = o.Creator.User.Email,
                         PhoneNumber = o.Creator.PhoneNumber,
                     },
@@ -257,6 +258,7 @@ namespace SkillReceive.Core.Services.Skill
                     Requirements = o.Requirements,
                     Creator = new Models.Creator.CreatorServiceModel()
                     {
+                        FullName = $"{o.Creator.User.FirstName} {o.Creator.User.LastName}",
                         Email = o.Creator.User.Email,
                         PhoneNumber = o.Creator.PhoneNumber,
                     },
