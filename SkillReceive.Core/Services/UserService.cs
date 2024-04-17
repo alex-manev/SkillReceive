@@ -23,7 +23,7 @@ namespace SkillReceive.Core.Services
                {
                    Email = u.Email,
                    FullName = $"{u.FirstName} {u.LastName}",
-                   PhoneNumber = u.PhoneNumber,
+                   PhoneNumber = u.Creator != null ? u.Creator.PhoneNumber : null,
                    IsCreator = u.Creator != null
                })
                .ToListAsync();
