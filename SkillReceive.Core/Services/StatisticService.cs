@@ -19,7 +19,9 @@ namespace SkillReceive.Core.Services
         public async Task<StatisticServiceModel> TotalAsync()
         {
             int totalSkills = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(s => s.IsApproved)
                 .CountAsync() + await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(s => s.IsApproved)
                 .CountAsync();
 
             int totalParticipants = 0;

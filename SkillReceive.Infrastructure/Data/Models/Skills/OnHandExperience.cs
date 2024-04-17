@@ -60,6 +60,9 @@ namespace SkillReceive.Infrastructure.Data.Models.Skills
         [ForeignKey(nameof(CreatorId))]
         public Creator Creator { get; set; } = null!;
 
+        [Comment("Is skill approved by admin")]
+        public bool IsApproved { get; set; }
+
         [Comment("At Hand Experience participants")]
         public IList<ApplicationUser> Participants { get; set; } = new List<ApplicationUser>();
     }

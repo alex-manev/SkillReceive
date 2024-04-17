@@ -75,6 +75,7 @@ namespace SkillReceive.Core.Services.OnHandExperience
         public async Task<OnHandFormModel?> GetOnHandFormModelByIdAsync(int id)
         {
             var onHandExp = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(s => s.IsApproved)
                 .Where(o => o.Id == id)
                 .Select(o => new OnHandFormModel()
                 {

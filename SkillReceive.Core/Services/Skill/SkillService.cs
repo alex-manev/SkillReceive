@@ -23,7 +23,8 @@ namespace SkillReceive.Core.Services.Skill
 
         public async Task<SkillQueryServiceModel> AllOnlineAsync(string? category = null, string? searchTerm = null, SkillSorting sorting = SkillSorting.Newest, int currPage = 1, int skillsPerPage = 1)
         {
-            var onlineToShow = repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>();
+            var onlineToShow = repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(s => s.IsApproved);
 
             if (category != null)
             {
@@ -69,7 +70,8 @@ namespace SkillReceive.Core.Services.Skill
 
         public async Task<SkillQueryServiceModel> AllOnHandAsync(string? category = null, string? searchTerm = null, SkillSorting sorting = SkillSorting.Newest, int currPage = 1, int skillsPerPage = 1)
         {
-            var onHandToShow = repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>();
+            var onHandToShow = repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(s => s.IsApproved);
 
 
             if (category != null)
@@ -138,6 +140,7 @@ namespace SkillReceive.Core.Services.Skill
         {
             List<SkillIndexServiceModel> onlineCourses =
              await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(s => s.IsApproved)
                 .OrderByDescending(h => h.Id)
                 .Take(2)
                 .Select(h => new SkillIndexServiceModel()
@@ -150,6 +153,7 @@ namespace SkillReceive.Core.Services.Skill
 
             List<SkillIndexServiceModel> onHandExperiences =
              await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(s => s.IsApproved)
                 .OrderByDescending(h => h.Id)
                 .Take(2)
                 .Select(h => new SkillIndexServiceModel()
@@ -168,6 +172,7 @@ namespace SkillReceive.Core.Services.Skill
         public async Task<IEnumerable<SkillServiceModel>> AllOnlineSkillsByCreatorIdAsync(int creatorId)
         {
             var onlineCourses = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                 .Where(s => s.IsApproved)
                  .Where(c => c.CreatorId == creatorId)
                  .ProjectOnlineCourse()
                  .ToListAsync();
@@ -178,6 +183,7 @@ namespace SkillReceive.Core.Services.Skill
         public async Task<IEnumerable<SkillServiceModel>> AllOnHandSkillsByCreatorIdAsync(int creatorId)
         {
             var onHandExps = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                 .Where(s => s.IsApproved)
                  .Where(c => c.CreatorId == creatorId)
                  .ProjectOnHand()
                  .ToListAsync();
@@ -189,6 +195,7 @@ namespace SkillReceive.Core.Services.Skill
         public async Task<IEnumerable<SkillServiceModel>> AllOnlineSkillsByUserId(string userId)
         {
             var onlineCourses = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                 .Where(s => s.IsApproved)
                  .Where(c => c.Participants.Any(p => p.Id == userId))
                  .ProjectOnlineCourse()
                  .ToListAsync();
@@ -200,6 +207,7 @@ namespace SkillReceive.Core.Services.Skill
         public async Task<IEnumerable<SkillServiceModel>> AllOnHandSkillsByUserId(string userId)
         {
             var onHandExps = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                 .Where(s => s.IsApproved)
                  .Where(c => c.Participants.Any(p => p.Id == userId))
                  .ProjectOnHand()
                  .ToListAsync();
@@ -224,6 +232,7 @@ namespace SkillReceive.Core.Services.Skill
         public async Task<OnlineDetailServiceModel> OnlineDetailsByIdAsync(int id)
         {
             return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(s => s.IsApproved)
                 .Where(o => o.Id == id)
                 .Select(o => new OnlineDetailServiceModel()
                 {
@@ -250,6 +259,7 @@ namespace SkillReceive.Core.Services.Skill
         public async Task<OnHandDetailsServiceModel> OnHandDetailsByIdAsync(int id)
         {
             return await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(s => s.IsApproved)
                 .Where(o => o.Id == id)
                 .Select(o => new OnHandDetailsServiceModel()
                 {

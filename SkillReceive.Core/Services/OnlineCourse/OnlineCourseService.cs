@@ -79,6 +79,7 @@ namespace SkillReceive.Core.Services.OnlineCourse
         public async Task<OnlineFormModel?> GetOnlineFormModelByIdAsync(int id)
         {
             var onlineCourse = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(s => s.IsApproved)
                 .Where(o => o.Id == id)
                 .Select(o => new OnlineFormModel()
                 {
