@@ -26,6 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IOnHandService, OnHandService>();
             services.AddScoped<IStatisticService, StatisticService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJoinService,JoinService>();
 
             return services;
         }

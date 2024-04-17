@@ -1,0 +1,22 @@
+﻿@model IEnumerable<JoinServiceModel>
+
+@{
+    ViewBag.Title = "All Skills";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row">
+    @foreach (var skill in Model)
+    {
+        <div class="card mb-3 col-4">
+            <img class="card-img-top" style="width:50%" src="@skill.SkillImageURL" alt="Skill Image">
+            <div class="card-body text-center">
+                <h4>@skill.SkillTitle</h4>
+                <h6>Agent: <b>@skill.CreatorFullName (@skill.CreatorEmail)</b></h6>@* 
+                <h6>Rented By: <b>@rent.RenterFullName (@rent.RenterEmail)</b></h6> *@
+            </div>
+        </div>
+    }
+</div>
