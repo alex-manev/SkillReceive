@@ -10,12 +10,14 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
         //Users with different roles
         public ApplicationUser OnlineCourseUser { get; set; } = null!;
         public ApplicationUser OnHandExperienceUser { get; set; } = null!;
-        public ApplicationUser GuestUser { get; set; } = null!;
+        public ApplicationUser AdminUser { get; set; } = null!;
 
 
         //Types of creators
         public Creator OnlineCourseCreator { get; set; } = null!;
         public Creator OnHandCourseCreator { get; set; } = null!;
+
+        public Creator AdminCreator { get; set; } = null!;
 
         //Online categories
 
@@ -60,7 +62,9 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 UserName = "onlineUser@mail.com",
                 NormalizedUserName = "onlineUser@mail.com",
                 Email = "onlineUser@mail.com",
-                NormalizedEmail = "onlineUser@mail.com"
+                NormalizedEmail = "onlineUser@mail.com",
+                FirstName = "Online",
+                LastName = "User"
             };
 
             OnlineCourseUser.PasswordHash = hasher.HashPassword(OnlineCourseUser, "online123");
@@ -74,21 +78,25 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 UserName = "realLife@mail.com",
                 NormalizedUserName = "realLife@mail.com",
                 Email = "realLife@mail.com",
-                NormalizedEmail = "realLife@mail.com"
+                NormalizedEmail = "realLife@mail.com",
+                FirstName = "Real",
+                LastName = "Life"
             };
 
             OnHandExperienceUser.PasswordHash = hasher.HashPassword(OnHandExperienceUser, "realLife123");
 
-            GuestUser = new ApplicationUser()
+            AdminUser = new ApplicationUser()
             {
-                Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
-                UserName = "guest@mail.com",
-                NormalizedUserName = "guest@mail.com",
-                Email = "guest@mail.com",
-                NormalizedEmail = "guest@mail.com"
+                Id = "df83445d-7e23-4fea-a2c5-5cd1232083c4",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "ADMIN@MAIL.COM",
+                Email = "admin@mail.com",
+                NormalizedEmail = "ADMIN@MAIL.COM",
+                FirstName = "Great",
+                LastName = "Admin"
             };
 
-            GuestUser.PasswordHash = hasher.HashPassword(GuestUser, "guest123");
+            AdminUser.PasswordHash = hasher.HashPassword(AdminUser, "admin123");
         }
 
         private void SeedCreators() 
@@ -105,6 +113,13 @@ namespace SkillReceive.Infrastructure.Data.SeedDb
                 Id = 2,
                 PhoneNumber = "4214267391",
                 UserId = OnHandExperienceUser.Id
+            };
+
+            AdminCreator = new Creator()
+            {
+                Id = 4,
+                PhoneNumber = "08934257381",
+                UserId = AdminUser.Id
             };
         }
 

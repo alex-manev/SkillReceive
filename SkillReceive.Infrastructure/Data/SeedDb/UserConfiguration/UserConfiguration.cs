@@ -11,7 +11,7 @@ namespace SkillReceive.Infrastructure.Data.SeedDb.UserConfiguration
         {
             var data = new SeedData();
 
-            builder.HasData(new ApplicationUser[] { data.OnlineCourseUser, data.OnHandExperienceUser, data.GuestUser });
+            builder.HasData(new ApplicationUser[] { data.OnlineCourseUser, data.OnHandExperienceUser, data.AdminUser });
         }
     }
 }

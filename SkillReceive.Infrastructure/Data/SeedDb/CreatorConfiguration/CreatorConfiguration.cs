@@ -10,7 +10,7 @@ namespace SkillReceive.Infrastructure.Data.SeedDb.CreatorConfiguration
         {
             var data = new SeedData();
 
-            builder.HasData(new Creator[] { data.OnHandCourseCreator, data.OnlineCourseCreator });
+            builder.HasData(new Creator[] { data.OnHandCourseCreator, data.OnlineCourseCreator,data.AdminCreator });
         }
     }
 }
