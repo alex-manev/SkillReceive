@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SkillReceive.Infrastructure.Data.Models;
-using static SkillReceive.Core.Constants.RoleConstants;
+using static SkillReceive.Core.Constants.AdminConstants;
 
 namespace SkillReceive.Areas.Identity.Pages.Account
 {
