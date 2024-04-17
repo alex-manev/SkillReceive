@@ -33,5 +33,21 @@ namespace SkillReceive.Areas.Admin.Controllers
 
             return View(mySkills);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Approve() 
+        {
+            var model = await skillService.GetUnApprovedAsync();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Approve(int skillId) 
+        {
+            await skillService.ApproveSkillAsync(skillId);
+
+            return RedirectToAction(nameof(Approve));
+        }
     }
 }

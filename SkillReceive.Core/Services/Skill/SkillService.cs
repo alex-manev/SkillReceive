@@ -416,5 +416,57 @@ namespace SkillReceive.Core.Services.Skill
                 }
             }
         }
+
+        public async Task ApproveSkillAsync(int skillId)
+        {
+            var onlineCourse = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(skillId);
+
+            if (onlineCourse != null && onlineCourse.IsApproved == false)
+            {
+                onlineCourse.IsApproved = true;
+
+                await repository.SaveChangesAsync();
+            }
+
+            var onHand = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
+
+            if (onHand != null && onHand.IsApproved == false)
+            {
+                onHand.IsApproved = true;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IEnumerable<SkillServiceModel>> GetUnApprovedAsync()
+        {
+            var onlines =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(x => x.IsApproved == false)
+                .Select(x => new SkillServiceModel()
+                {
+                    Id = x.Id,
+                    ImageURL= x.ImageURL,
+                    PricePerMonth = x.PricePerMonth,
+                    Title = x.Title,
+                    Participants = x.Participants.Count()
+                })
+                .ToListAsync();
+
+            var onHands = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+               .Where(x => x.IsApproved == false)
+               .Select(x => new SkillServiceModel()
+               {
+                   Id = x.Id,
+                   ImageURL = x.ImageURL,
+                   PricePerMonth = x.PricePerMonth,
+                   Title = x.Title,
+                   Participants = x.Participants.Count()
+               })
+               .ToListAsync();
+
+            var skills = onlines.Concat(onHands);
+
+            return skills;
+        }
     }
 }

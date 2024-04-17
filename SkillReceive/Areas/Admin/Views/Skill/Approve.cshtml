@@ -1,0 +1,23 @@
+﻿ @model IEnumerable<SkillServiceModel>
+
+@{
+    ViewBag.Title = "Approve";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h4>Skills to approve</h4>
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">No skills to approve!</h2>
+}
+
+<div class="row">
+    @foreach (var skill in Model)
+    {
+        @await Html.PartialAsync("~/Areas/Admin/Views/Shared/_ApproveSkillPartial.cshtml", skill)
+    }
+</div>
+

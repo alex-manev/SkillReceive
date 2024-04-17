@@ -22,6 +22,7 @@ namespace SkillReceive.Core.Services
         public async Task<IEnumerable<JoinServiceModel>> AllAsync()
         {
             var onlines =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                .Where(o => o.Participants.Count() > 0)
                 .Select(o => new JoinServiceModel()
                 {
                     SkillImageURL = o.ImageURL,
@@ -32,6 +33,7 @@ namespace SkillReceive.Core.Services
                 .ToListAsync();
 
             var onHnads = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(o => o.Participants.Count() > 0)
                 .Select(o => new JoinServiceModel()
                 {
                     SkillImageURL = o.ImageURL,
