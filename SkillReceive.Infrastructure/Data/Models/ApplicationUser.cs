@@ -19,5 +19,7 @@ namespace SkillReceive.Infrastructure.Data.Models
         public List<OnHandExperience> OnHandExperiences { get; set; } = new List<OnHandExperience>();
 
         public List<OnlineCourse> OnlineCourses { get; set; } = new List<OnlineCourse>();
+
+        public Creator? Creator { get; set; }
     }
 }
