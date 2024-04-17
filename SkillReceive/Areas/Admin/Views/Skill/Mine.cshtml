@@ -1,0 +1,50 @@
+﻿ @model MySkillsViewModel
+
+@{
+    ViewBag.Title = "My Houses";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<h4>My Added Skills</h4>
+
+@if (!Model.AddedSkills.Any())
+{
+    <h2 class="text-center">You have no added skills yet!</h2>
+}
+
+<div class="row">
+    @foreach (var house in Model.AddedSkills)
+    {
+        @await Html.PartialAsync("~/Views/House/_OnlineAllPartial.cshtml", house)
+    }
+</div>
+
+<h4>My Joined Online Courses</h4>
+
+@if (!Model.JoinedOnline.Any())
+{
+    <h2 class="text-center">You have not joined an online course yet!</h2>
+}
+
+<div class="row">
+    @foreach (var house in Model.JoinedOnline)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_OnlineAllPartial.cshtml", house)
+    }
+</div>
+
+<h4>My Joined On Hand Experiences</h4>
+
+@if (!Model.JoinedOnHand.Any())
+{
+    <h2 class="text-center">You have not joined an On Hand Experience yet!</h2>
+}
+
+<div class="row">
+    @foreach (var house in Model.JoinedOnHand)
+    {
+        @await Html.PartialAsync("~/Views/Shared/_OnHandAllPartial.cshtml", house)
+    }
+</div>
