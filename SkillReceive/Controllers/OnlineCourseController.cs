@@ -13,7 +13,7 @@ using static SkillReceive.Core.Constants.MessageConstants;
 
 namespace SkillReceive.Controllers
 {
-    
+
     public class OnlineCourseController : BaseController
     {
         private readonly ICreatorService creatorService;
@@ -68,7 +68,7 @@ namespace SkillReceive.Controllers
         public async Task<IActionResult> Add()
         {
 
-            var model = new OnlineFormModel() 
+            var model = new OnlineFormModel()
             {
                 Categories = await onlineCourseService.AllCategoriesAsync()
             };
@@ -95,19 +95,20 @@ namespace SkillReceive.Controllers
             int? creatorId = await creatorService.GetCreatorIdAsync(User.Id());
 
             int newOnlineCourseId = await onlineCourseService.CreateAsync(model, creatorId ?? 0);
+            TempData[UserMessageSuccess] = "Skill added";
 
-            return RedirectToAction(nameof(Details), new { id = newOnlineCourseId , information = model.GetInformation()});
+            return RedirectToAction(nameof(All),"Skill");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (await skillService.ExistsOnlineAsync(id) == false )
+            if (await skillService.ExistsOnlineAsync(id) == false)
             {
                 return BadRequest();
             }
 
-            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id())  == false && User.IsAdmin() == false)
+            if (await onlineCourseService.HasCreatorWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -144,7 +145,9 @@ namespace SkillReceive.Controllers
 
             await onlineCourseService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(Details), new { id , Information = model.GetInformation()});
+            TempData[UserMessageSuccess] = "Edit applied";
+
+            return RedirectToAction(nameof(Details), new { id, Information = model.GetInformation() });
         }
 
         [HttpGet]
@@ -188,6 +191,7 @@ namespace SkillReceive.Controllers
 
             await skillService.DeleteOnlineAsync(model.Id);
 
+            TempData[UserMessageSuccess] = "Skill deleted";
             return RedirectToAction(nameof(All));
         }
 
@@ -207,40 +211,16 @@ namespace SkillReceive.Controllers
                 }
 
                 await skillService.JoinOnlineAsync(id, User.Id());
+
+                TempData[UserMessageSuccess] = "You have joined the course successfully";
             }
             catch (Exception)
             {
-                throw;
-            }
-
-            TempData[UserMessageSuccess] = "You have joined the course successfully";
-
-            return RedirectToAction(nameof(Mine),"Skill");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Leave(int id)
-        {
-            if (await skillService.ExistsOnlineAsync(id) == false)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                if (await creatorService.ExistsByIdAsync(User.Id()) && User.IsAdmin() == false)
-                {
-                    throw new UnauthorizedActionException();
-                }
-
-                await skillService.LeaveOnline(id, User.Id());
-            }
-            catch (Exception)
-            {
-                throw;
+                TempData[UserMessageError] = "You have already joined this course";
             }
 
             return RedirectToAction(nameof(Mine), "Skill");
         }
-    }
+
+    }  
 }

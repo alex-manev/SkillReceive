@@ -51,5 +51,7 @@ namespace SkillReceive.Infrastructure.Data.Common
                 DbSet<T>().Remove(entity);
             }
         }
+
+        
     }
 }

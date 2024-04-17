@@ -4,7 +4,7 @@
     ViewBag.Title = "All Skills";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 style="color:#048c7d" class="text-center">@ViewBag.Title</h2>
 <hr />
 
 <form method="get">
@@ -27,7 +27,7 @@
             <input asp-for="SearchTerm" class="form-control" placeholder="...">
         </div>
 
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-3" >
             <div class="form-group">
                 <label asp-for="Sorting"></label>
                 <select asp-for="Sorting" class="form-control">
@@ -40,7 +40,7 @@
 
         <div class="col-md-3">
             <div class="form-group mt-4 p-2">
-                <input type="submit" value="Search" class="btn btn-primary" />
+                <input style="border-color:#048c7d;background-color:aquamarine;color:black;" type="submit" value="Search" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
 
 <div class="row mb-5">
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+        <a style="border-color:#048c7d;background-color:aquamarine;color:black;" class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
            asp-controller="Skill"
            asp-action="All"
            asp-route-currentPage="@previousPage"
@@ -75,7 +75,7 @@
     }
 
     <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-primary
+        <a style="border-color:#048c7d;background-color:aquamarine;color:black;width:" class="btn btn-primary
            @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
            asp-controller="Skill"
            asp-action="All"
@@ -89,7 +89,7 @@
 
 
 
-<h2 class="text-center">Online Courses</h2>
+<h2 style="color:#048c7d" class="text-center">Online Courses</h2>
 <hr />
 
 @if (!Model.OnlineSkills.Any())
@@ -106,7 +106,7 @@
 </div>
 
 
-<h2 class="text-center">On Hand Experiences</h2>
+<h2 style="color:#048c7d" class="text-center">On Hand Experiences</h2>
 <hr />
 
 @if (!Model.OnHandSkills.Any())

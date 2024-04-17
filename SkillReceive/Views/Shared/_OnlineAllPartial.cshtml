@@ -4,7 +4,7 @@
 @inject ISkillService skillService
 
 
-<div class="col-md-4">
+<div class="col-md-3">
     <div class="card mb-2">
         <img class="card-img-top" src="@Model.ImageURL" alt="Skill Image">
         <div class="card-body text-center">
@@ -15,34 +15,32 @@
             </h6>
             <h6>(Participants: @(Model.Participants))</h6>
             <br />
-            <a asp-area="" asp-controller="OnlineCourse" asp-action="Details" asp-route-id="@Model.Id"
+            <a style="border-color:#048c7d;background-color:aquamarine;color:black" asp-area="" asp-controller="OnlineCourse" asp-action="Details" asp-route-id="@Model.Id"
                asp-route-information="@Model.GetInformation()" class="btn btn-success">Details</a>
             @if (this.User.Identity.IsAuthenticated)
             {
-                if (await onlineService.HasCreatorWithIdAsync(Model.Id, User.Id()) || 
+                if (await onlineService.HasCreatorWithIdAsync(Model.Id, User.Id()) ||
                 User.IsAdmin())
                 {
-                    <a asp-area="" asp-controller="OnlineCourse" asp-action="Edit" asp-route-id="@Model.Id"
+                    <a style="border-color:#048c7d;background-color:aquamarine;color:black" asp-area="" asp-controller="OnlineCourse" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
-                    <a asp-area="" asp-controller="OnlineCourse" asp-action="Delete" asp-route-id="@Model.Id"
+                    <a style="border-color:#048c7d;background-color:aquamarine;color:black" asp-area="" asp-controller="OnlineCourse" asp-action="Delete" asp-route-id="@Model.Id"
                        class="btn btn-danger">Delete</a>
 
                 }
                 <p></p>
                 if (await creatorService.ExistsByIdAsync(User.Id()) == false || User.IsAdmin())
                 {
-                    <form class="input-group-sm" asp-controller="OnlineCourse"
-                          asp-area="" asp-action="Join" asp-route-id="@Model.Id" method="post">
-                        <input class="btn btn-primary" type="submit" value="Join" />
-                    </form>
-                } 
-                else if (await skillService.HasJoinedOnlineByUserIdAsync(Model.Id, User.Id()))
-                {
-                    <form asp-area="" asp-controller="OnlineCourse" asp-action="Leave"
-                          asp-route-id="@Model.Id" method="post">
-                        <input class="btn btn-primary" type="submit" value="Leave" />
-                    </form>
+                    if (await skillService.HasJoinedOnlineByUserIdAsync(Model.Id, User.Id()) == false)
+                    {
+                        <form class="input-group-sm" asp-controller="OnlineCourse"
+                              asp-area="" asp-action="Join" asp-route-id="@Model.Id" method="post">
+                            <input style="border-color:#041151;background-color:#0b6c92;color:white" class="btn btn-primary" type="submit" value="Join" />
+                        </form>
+                    }
+                    
                 }
+                
             }
         </div>
     </div>

@@ -54,10 +54,6 @@ namespace SkillReceive.Core.Contracts.Skill
 
         Task JoinOnHandAsync(int id, string userId);
 
-        Task LeaveOnline(int skillId, string userId);
-
-        Task LeaveOnHand(int skillId, string userId);
-
         Task<IEnumerable<SkillServiceModel>> GetUnApprovedAsync();
 
         Task ApproveSkillAsync(int skillId);

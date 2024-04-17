@@ -9,6 +9,7 @@ using SkillReceive.Core.Models.Skill.Skills;
 using SkillReceive.Infrastructure.Data.Common;
 using SkillReceive.Infrastructure.Data.Models;
 using SkillReceive.Infrastructure.Data.Models.Categories;
+using static SkillReceive.Infrastructure.Constants.DataConstants;
 
 namespace SkillReceive.Core.Services.Skill
 {
@@ -314,9 +315,18 @@ namespace SkillReceive.Core.Services.Skill
 
             var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(skillId);
 
+            var onlineCourses = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                 .Where(s => s.IsApproved)
+                 .Where(s => s.Participants.Any(p => p.Id == userId))
+                 .Where(s => s.Id == skillId)
+                 .ToListAsync();
+
             if (skill != null)
             {
-                result = skill.Participants.Any(p => p.Id == userId);
+                if (onlineCourses.Count() > 0)
+                {
+                    result = true;
+                }
             }
 
             return result;
@@ -328,9 +338,18 @@ namespace SkillReceive.Core.Services.Skill
 
             var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
 
+            var onHands = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                 .Where(s => s.IsApproved)
+                 .Where(s => s.Participants.Any(p => p.Id == userId))
+                 .Where(s => s.Id == skillId)
+            .ToListAsync();
+
             if (skill != null)
             {
-                result = skill.Participants.Any(p => p.Id == userId);
+                if (onHands.Count() > 0)
+                {
+                    result = true;
+                }
             }
 
             return result;
@@ -342,9 +361,16 @@ namespace SkillReceive.Core.Services.Skill
 
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
+
             if (skill != null && user != null)
             {
-                if (skill.Participants.Any(p => p.Id == userId))
+                var onlineCourses = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+                 .Where(s => s.IsApproved)
+                 .Where(s => s.Participants.Any(p => p.Id == userId))
+                 .Where(s => s.Id == id)
+                 .ToListAsync();
+
+                if (onlineCourses.Count() > 0)
                 {
                     throw new AlreadyJoinedActionException("You have already joined this course.");
                 }
@@ -364,10 +390,15 @@ namespace SkillReceive.Core.Services.Skill
 
             if (skill != null && user != null)
             {
-                if (skill.Participants.Any(p => p.Id == userId))
+                var onHands = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnHandExperience>()
+                .Where(s => s.IsApproved)
+                .Where(s => s.Participants.Any(p => p.Id == userId))
+                .Where(s => s.Id == id)
+                .ToListAsync();
+
+                if (onHands.Count() > 0)
                 {
                     throw new AlreadyJoinedActionException("You have already joined this course.");
-
                 }
                 else
                 {
@@ -377,45 +408,7 @@ namespace SkillReceive.Core.Services.Skill
             }
         }
 
-        public async Task LeaveOnline(int skillId, string userId)
-        {
-            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnlineCourse>(skillId);
-
-            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
-
-            if (skill != null && user != null)
-            {
-                if (skill.Participants.Any(p => p.Id == userId))
-                {
-                    skill.Participants.Remove(user);
-                    await repository.SaveChangesAsync();
-                }
-                else
-                {
-                    throw new NotAmemberException("You are not a participant in this course.");
-                }
-            }
-        }
-
-        public async Task LeaveOnHand(int skillId, string userId)
-        {
-            var skill = await repository.GetByIdAsync<Infrastructure.Data.Models.Skills.OnHandExperience>(skillId);
-
-            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
-
-            if (skill != null && user != null)
-            {
-                if (skill.Participants.Any(p => p.Id == userId))
-                {
-                    skill.Participants.Remove(user);
-                    await repository.SaveChangesAsync();
-                }
-                else
-                {
-                    throw new NotAmemberException("You are not a participant in this course.");
-                }
-            }
-        }
+       
 
         public async Task ApproveSkillAsync(int skillId)
         {
@@ -440,12 +433,12 @@ namespace SkillReceive.Core.Services.Skill
 
         public async Task<IEnumerable<SkillServiceModel>> GetUnApprovedAsync()
         {
-            var onlines =  await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
+            var onlines = await repository.AllReadOnly<Infrastructure.Data.Models.Skills.OnlineCourse>()
                 .Where(x => x.IsApproved == false)
                 .Select(x => new SkillServiceModel()
                 {
                     Id = x.Id,
-                    ImageURL= x.ImageURL,
+                    ImageURL = x.ImageURL,
                     PricePerMonth = x.PricePerMonth,
                     Title = x.Title,
                     Participants = x.Participants.Count()

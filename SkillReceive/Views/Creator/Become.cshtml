@@ -4,7 +4,7 @@
     ViewBag.Title = "Become Creator";
 }
 
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 style="color:#048c7d" class="text-center">@ViewBag.Title</h2>
 <hr />
 
 @if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null)
@@ -23,9 +23,13 @@
                 <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
             </div>
             <div class="text-center">
-                <input class="btn btn-primary mt-3 " type="submit" value="Save" />
+                <input style="border-color:#048c7d;background-color:aquamarine;color:black;width:400px" class="btn btn-primary mt-3 " type="submit" value="Become" />
             </div>
         </form>
+        <br></br>
+        <div style=" text-align:center;background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            <strong style="color: #721c24;">Warning!</strong> By becoming a creator you lose the ability to join courses!
+        </div>
     </div>
 </div>
 

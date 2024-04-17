@@ -6,7 +6,7 @@
         <div class="card-body">
             <h5 class="card-title"> For review</h5>
             <p class="card-text">Please check skills for review.</p>
-            <a asp-action="ForReview" class="btn btn-primary">For review</a>
+            <a asp-controller="Skill" asp-action="Approve" style="border-color:#048c7d;background-color:aquamarine;color:black"  class="btn btn-primary">For review</a>
         </div>
     </div>
 </div>
@@ -15,24 +15,22 @@
     <h2 class="display-4">Hello, Admin!</h2>
     <p class="lead mb-1 mt-3">
         This is your administrator area - you can <b>read</b>, <b>create</b>,
-        <b>delete</b> and <b>edit</b> houses.
-        <br />You can <b>rent</b> and <b>leave</b> the free ones, too!
+        <b>delete</b> and <b>edit</b> skills.
+        <br />You can <b>join</b> the courses as well!
     </p>
     <p class="lead mt-1">
-        You can also see <b>all users and agents</b> and <b>all rents</b> in the system.
+        You can also see <b>all users and creators</b> and <b>all skill courses</b> in the system.
     </p>
     <hr class="my-4">
     <a asp-area="" asp-controller="Skill" asp-action="All"
-       class="btn btn-primary btn-lg">All Skills</a>
+       style="border-color:#048c7d;background-color:aquamarine;color:black" class="btn btn-primary btn-lg">All Skills</a>
     <a asp-area="" asp-controller="Skill" asp-action="Add"
-       class="btn btn-primary btn-lg">Add Skill</a>
+       style="border-color:#048c7d;background-color:aquamarine;color:black" class="btn btn-primary btn-lg">Add Skill</a>
     <span>  |   </span>
     <a asp-area="Admin" asp-controller="Skill" asp-action="Mine"
-       class="btn btn-primary btn-lg">My Skill</a>
+       style="border-color:#048c7d;background-color:aquamarine;color:black" class="btn btn-primary btn-lg">My Skill</a>
     <span>  |   </span>
-    <a asp-area="Admin" asp-controller="Join" asp-action="All"
-       class="btn btn-primary btn-lg">All Joined Skills</a>
     <a asp-area="Admin" asp-controller="User" asp-action="All"
-       class="btn btn-primary btn-lg">All Users</a>
+       style="border-color:#048c7d;background-color:aquamarine;color:black" class="btn btn-primary btn-lg">All Users</a>
 </div>
 

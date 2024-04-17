@@ -8,6 +8,7 @@ using SkillReceive.Core.Contracts.Skill;
 using SkillReceive.Core.Exceptions;
 using SkillReceive.Core.Models.Skill.OnHandExperience;
 using System.Security.Claims;
+using static SkillReceive.Core.Constants.MessageConstants;
 
 namespace SkillReceive.Controllers
 {
@@ -87,6 +88,7 @@ namespace SkillReceive.Controllers
             int? creatorId = await creatorService.GetCreatorIdAsync(User.Id());
 
             int newOnHandExperienceId = await onHandService.CreateAsync(model, creatorId ?? 0);
+            TempData[UserMessageSuccess] = "Skill added";
 
             return RedirectToAction(nameof(Details), new { id = newOnHandExperienceId });
         }
@@ -135,6 +137,7 @@ namespace SkillReceive.Controllers
 
             await onHandService.EditAsync(id, model);
 
+            TempData[UserMessageSuccess] = "Skill edited";
             return RedirectToAction(nameof(Details), new { id });
         }
 
@@ -179,6 +182,7 @@ namespace SkillReceive.Controllers
             }
 
             await skillService.DeleteOnHandAsync(model.Id);
+            TempData[UserMessageSuccess] = "Skill deleted";
 
             return RedirectToAction(nameof(Mine));
         }
@@ -199,41 +203,16 @@ namespace SkillReceive.Controllers
                 }
 
                 await skillService.JoinOnHandAsync(id, User.Id());
+
+                TempData[UserMessageSuccess] = "You have joined the course successfully";
             }
             catch (Exception)
             {
-
-                throw;
+                TempData[UserMessageError] = "You have already joined this course";
             }
-
-
 
             return RedirectToAction(nameof(Mine), "Skill");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Leave(int id)
-        {
-            if (await skillService.ExistsOnHandAsync(id) == false)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                if (await creatorService.ExistsByIdAsync(User.Id()) && User.IsAdmin() == false)
-                {
-                    throw new UnauthorizedActionException();
-                }
-
-                await skillService.LeaveOnHand(id, User.Id());
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-            return RedirectToAction(nameof(Mine), "Skill");
-        }
     }
 }
